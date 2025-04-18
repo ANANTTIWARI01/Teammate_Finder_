@@ -1,9 +1,13 @@
 import express from "express"
 import authRouter from "./routes/authRoute.js"
+import adminRouter from "./routes/adminRoute.js"
 import "dotenv/config"
 import cors from "cors"
 import { connectDB } from "./connection/db.js"
 import cookieParser from "cookie-parser"
+import admin from "./models/adminModel.js"
+
+
 const PORT = process.env.PORT
 const app = express()
 
@@ -22,6 +26,8 @@ app.use(cors(corsOptions))
 
 app.use(cookieParser())
 app.use("/api/auth", authRouter)
+app.use("/api/admin",adminRouter)
+// app.use("/api/user",userRouter)
 
 
 connectDB()

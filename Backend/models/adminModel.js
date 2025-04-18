@@ -4,23 +4,24 @@ import mongoose, { Schema } from "mongoose"
 const hackathonSchema = new Schema({
     name: {
         type: String,
-        required: true
+        // required: true,
+        unique: true
     },
     mode: {
         type: String,
         enum: ["offline", "online"],
-        required: true
+        // required: true
     },
-    Description: {
+    description: {
         type: String,
     },
-    Date: {
+    date: {
         type: Date,
-        required: true
+        // required: true
     },
     registrationLink: {
         type: String,
-        required: true
+        // required: true
     },
     hackathonLink: {
         type: String
@@ -35,16 +36,16 @@ const hackathonSchema = new Schema({
 const adminSchema = new Schema({
     name: {
         type: String,
-        required: true,
+        // required: true,
     },
     email: {
         type: String,
-        required: true,
-        unique: true
+        // required: true,
+        // unique: true
     },
     password: {
         type: String,
-        required: true,
+        // required: true,
     },
     organizationName: {
         type: String,
@@ -55,12 +56,14 @@ const adminSchema = new Schema({
         // required: true
     },
     locationCoordinates: {
-        latitude: { type: String, 
+        latitude: {
+            type: String,
             // required: true
-         },
-        longitude: { type: String,
+        },
+        longitude: {
+            type: String,
             //  required: true
-             }
+        }
     },
     image: {
         type: String,
