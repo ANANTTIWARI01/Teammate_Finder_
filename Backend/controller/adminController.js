@@ -37,7 +37,7 @@ export async function addHackathon(req, res) {
 
         res.status(200).json({ message: "Hackathon added successfully" });
     } catch (error) {
-        console.error(error.stack); 
+        console.error(error.stack);
         return res.status(500).json({
             message: "Internal Server Error",
             error: error.message,
@@ -45,4 +45,27 @@ export async function addHackathon(req, res) {
     }
 }
 
+export async function deleteHackathon(req, res) {
+    try {
+        const adminId = req.params.adminId
+        const hackathonId = req.params.hackathonId
+
+        if (!adminId || !hackathonId) return res.status(404).send({ message: "Hackathon ID is required" })
+
+        const adminDocument = await admin.findById(adminId)
+        if (!adminDocument) return res.status(404).send({ message: "Admin Document not found" })
+
+        // filtering the hackathons
+        adminDocument.Hackathon = adminDocument.Hackathon.filter(obj => obj._id.toString() !== hackathonId)
+
+        //    saving the filtered hackathons
+        await adminDocument.save()
+
+        return res.status(200).json({ message: "Hackathon Deleted Successfully", admin: adminDocument })
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).send({ error: "Server error" });
+    }
+}
 
