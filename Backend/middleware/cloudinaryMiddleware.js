@@ -11,6 +11,7 @@ async function uploadToCloudinary(req) {
 
     // Upload an image
     try {
+        
         const uploadResult = await cloudinary.uploader
             .upload(req.file.path, {
                 folder: "Teammate-Finder"

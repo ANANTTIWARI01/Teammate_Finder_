@@ -12,6 +12,7 @@ const PORT = process.env.PORT
 const app = express()
 
 app.use(express.json())
+app.use(cookieParser())
 
 app.use(express.urlencoded({ extended: true }))
 
@@ -21,15 +22,14 @@ const corsOptions = {
     methods: ["GET", "POST", "PATCH", "DELETE", "PUT", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }
-
 app.use(cors(corsOptions))
+connectDB()
 
-app.use(cookieParser())
+
 app.use("/api/auth", authRouter)
 app.use("/api/admin",adminRouter)
 // app.use("/api/user",userRouter)
 
 
-connectDB()
 app.listen(PORT, () => console.log(`server is running on ${PORT}`)
 )
