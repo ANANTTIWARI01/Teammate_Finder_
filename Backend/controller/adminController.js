@@ -116,13 +116,18 @@ export async function updateHackathon(req, res) {
 export async function adminUpdate(req, res) {
     try {
         const adminId = req.params.adminId
-        const { name, email, organizationName, locationName,description } = req.body
+        const { name, email, organizationName, locationName, description } = req.body
 
         const adminUpdate = await admin.findById(adminId)
-console.log(adminUpdate);
 
         if (!adminUpdate) return res.status(404).json({ message: "Admin not found" })
 
+        if (req.file) {
+            const secure_url = await uploadToCloudinary(req).catch((err) => {
+                throw new Error("Cloudinary upload failed");
+            });
+            adminUpdate.image = secure_url
+        }
         if (name) adminUpdate.name = name;
         if (email) adminUpdate.email = email;
         if (description) adminUpdate.description = description;
