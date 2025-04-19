@@ -86,17 +86,16 @@ export async function updateHackathon(req, res) {
 
         const adminDocument = await admin.findById(adminId)
 
-
         const toUpdateHackathon = adminDocument.Hackathon.find(obj => obj._id.toString() === hackathonId)
 
         if (!toUpdateHackathon) return res.status(404).send({ message: " Hackathon not found" })
 
+        if (req.file) {
             const secure_url = await uploadToCloudinary(req).catch((err) => {
                 throw new Error("Cloudinary upload failed");
             });
-    
-
-        if (req.file) toUpdateHackathon.image = secure_url
+            toUpdateHackathon.image = secure_url
+        }
         if (name) toUpdateHackathon.name = name
         if (registrationLink) toUpdateHackathon.registrationLink = registrationLink
         if (hackathonLink) toUpdateHackathon.hackathonLink = hackathonLink
@@ -107,6 +106,32 @@ export async function updateHackathon(req, res) {
 
         await adminDocument.save()
         return res.status(200).json({ message: "Hackathon Update Successfully", admin: adminDocument })
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).send({ error: "Server error" });
+    }
+}
+
+export async function adminUpdate(req, res) {
+    try {
+        const adminId = req.params.adminId
+        const { name, email, organizationName, locationName,description } = req.body
+
+        const adminUpdate = await admin.findById(adminId)
+console.log(adminUpdate);
+
+        if (!adminUpdate) return res.status(404).json({ message: "Admin not found" })
+
+        if (name) adminUpdate.name = name;
+        if (email) adminUpdate.email = email;
+        if (description) adminUpdate.description = description;
+        if (organizationName) adminUpdate.organizationName = organizationName;
+        if (locationName) adminUpdate.locationName = locationName;
+
+        await adminUpdate.save()
+
+        return res.status(200).json({ message: "Admin Updated Successfully" })
     }
     catch (error) {
         console.log(error);
