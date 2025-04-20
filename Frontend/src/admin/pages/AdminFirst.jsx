@@ -1,8 +1,13 @@
 import React from 'react'
-
+import Header from "../../admin/component/Header"
+import Footer from '../../admin/component/Footer'
+import { Outlet } from 'react-router-dom'
 function AdminFirst() {
-  return (
-    <div>AdminFirst</div>
+  return (<>
+    <Header/>
+    <Outlet/>
+    <Footer/>
+    </>
   )
 }
 

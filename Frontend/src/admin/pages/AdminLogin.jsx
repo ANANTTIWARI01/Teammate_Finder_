@@ -4,8 +4,8 @@ import { useAdminAuth } from "../context/AdminAuth";
 import instance from "../../../axiosConfig";
 
 function AdminLogin() {
-  const navigate = useNavigate();
   const { setIsAuthenticated } = useAdminAuth();
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -19,9 +19,11 @@ function AdminLogin() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await instance.post("/auth/admin/login", form, { withCredentials: true });
+     const response =  await instance.post("/auth/admin/login", form, { withCredentials: true });
+     console.log(response.data.admin.id);
+      
       setIsAuthenticated(true);
-      navigate("/admin/home");
+      navigate(`/admin/home/${response.data.admin.id}`);
     } catch (error) {
       console.log("Login error:", error);
     }
