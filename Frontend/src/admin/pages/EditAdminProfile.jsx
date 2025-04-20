@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import instance from "../../../axiosConfig";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import AdminHome from "./AdminHome";
 
 function EditAdminProfile() {
   const [formData, setFormData] = useState({
@@ -140,6 +141,7 @@ function EditAdminProfile() {
           className="w-full p-2 border border-gray-300 rounded"
           accept="image/*"
         />
+        
       </div>
 
       {/* Submit Button */}

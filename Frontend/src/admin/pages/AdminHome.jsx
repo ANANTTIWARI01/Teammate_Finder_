@@ -1,20 +1,18 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 // import { useAdminAuth } from "../context/AdminAuth";
 import instance from "../../../axiosConfig";
 
 function AdminHome() {
-  // const { hackathons,setHackathons } = useAdminAuth();
   const { id } = useParams();
-// console.log(hackathons[0].date.trim());
-const [hackathonId,setHackathonId] = useState("")
-const [hackathons, setHackathons] = useState([])
+  const [hackathonId, setHackathonId] = useState("")
+  const [hackathons, setHackathons] = useState([])
+  const [adminData,setAdminData] = useState([])
 
-
-useEffect(() => {
+  useEffect(() => {
     showHackathon()
   }, [id])
-  
+
   const showHackathon = async () => {
     try {
       const response = await instance.get(`/admin/${id}/hackathons`)
@@ -22,29 +20,43 @@ useEffect(() => {
       setHackathons(response.data.hackathons)
     } catch (error) {
       console.log(error, error.message);
-      
+
     }
   }
 
+useEffect(()=>{
+showAdminData()
+},[])
 
-useEffect(() => {
-  deletingHackathon()
-}, [hackathonId])
-
-const deletingHackathon = async () => {
-  try {
-    const response = await instance.delete(`/admin/${id}/deletehackathon/${hackathonId}`);
-    console.log(response);
-
-    setHackathons((prev) => prev.filter(hackathon => hackathon._id !== hackathonId));
-
-  } catch (error) {
-    console.log(error, error.message);
+  const showAdminData = async()=>{
+    try {
+      const response = await instance.get(`/admin/${id}`)
+      setAdminData(response.data.adminData);
+      // console.log(response.data.adminData);
+      
+      
+    } catch (error) {
+      console.log(error, error.message);
+    }
   }
-};
+  console.log(adminData);
+  
 
+  useEffect(() => {
+    deletingHackathon()
+  }, [hackathonId])
 
+  const deletingHackathon = async () => {
+    try {
+      const response = await instance.delete(`/admin/${id}/deletehackathon/${hackathonId}`);
+      console.log(response);
 
+      setHackathons((prev) => prev.filter(hackathon => hackathon._id !== hackathonId));
+
+    } catch (error) {
+      console.log(error, error.message);
+    }
+  };
 
   return (
     <>
@@ -53,7 +65,7 @@ const deletingHackathon = async () => {
         <div className="w-full lg:w-1/3 bg-indigo-50 border-r border-indigo-200 flex flex-col items-center py-8 shadow-lg">
           <div className="w-32 h-32 bg-gray-300 rounded-full mb-6 shadow-md flex items-center justify-center">
             {/* Placeholder for Admin Photo */}
-            <p className="text-gray-500 font-semibold">Photo</p>
+            <img src={adminData.image} alt="" className="text-gray-500 font-semibold" />
           </div>
           <Link
             className="text-white bg-indigo-500 px-8 py-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300"
@@ -92,15 +104,15 @@ const deletingHackathon = async () => {
                     {hackathon.name}
                   </h1>
                   <div className="flex items-center justify-center">
-                  <h3 className="text-md font-semibold text-gray-800">{hackathon.date}</h3>
-                  <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
+                    <h3 className="text-md font-semibold text-gray-800">{hackathon.date}</h3>
+                    <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
                   </div>
                   <p className="text-gray-600 mt-2">{hackathon.description}</p>
-          <div className="flex items-center justify-around">
-            <button className="text-white bg-indigo-500 px-5 py-2 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300" onClick={()=>setHackathonId(hackathon._id)} >Delete</button>
-            <button className="text-white bg-green-500 px-5 py-2 rounded-lg hover:bg-green-600 shadow-md transition duration-300" >Edit</button>
-            
-            </div>
+                  <div className="flex items-center justify-around">
+                    <button className="text-white bg-indigo-500 px-5 py-2 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300" onClick={() => setHackathonId(hackathon._id)} >Delete</button>
+                    <button className="text-white bg-green-500 px-5 py-2 rounded-lg hover:bg-green-600 shadow-md transition duration-300" >Edit</button>
+
+                  </div>
                 </div>
               ))}
             </div>
