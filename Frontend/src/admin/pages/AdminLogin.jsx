@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAdminAuth } from "../context/AdminAuth";
+import AdminAuth, { useAdminAuth } from "../context/AdminAuth";
 import instance from "../../../axiosConfig";
 
 function AdminLogin() {
-  const { setIsAuthenticated } = useAdminAuth();
+  const { setIsAuthenticated,setAdminId } = useAdminAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
@@ -19,9 +19,8 @@ function AdminLogin() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-     const response =  await instance.post("/auth/admin/login", form, { withCredentials: true });
-     console.log(response.data.admin.id);
-      
+      const response = await instance.post("/auth/admin/login", form, { withCredentials: true });
+      setAdminId(response.data.admin.id)
       setIsAuthenticated(true);
       navigate(`/admin/home/${response.data.admin.id}`);
     } catch (error) {

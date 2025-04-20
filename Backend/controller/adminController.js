@@ -42,7 +42,7 @@ export async function addHackathon(req, res) {
         Admin.Hackathon.push(newHackathon);
         await Admin.save();
 
-        res.status(200).json({ message: "Hackathon added successfully",    });
+        res.status(200).json({ message: "Hackathon added successfully", });
     } catch (error) {
         console.error(error.stack);
         return res.status(500).json({
@@ -116,7 +116,7 @@ export async function updateHackathon(req, res) {
 export async function adminUpdate(req, res) {
     try {
         const adminId = req.params.adminId
-        const { name, email, organizationName, locationName, description,latitude,longitude } = req.body
+        const { name, email, organizationName, locationName, description, latitude, longitude } = req.body
 
         const adminUpdate = await admin.findById(adminId)
 
@@ -133,8 +133,8 @@ export async function adminUpdate(req, res) {
         if (description) adminUpdate.description = description;
         if (organizationName) adminUpdate.organizationName = organizationName;
         if (locationName) adminUpdate.locationName = locationName;
-        if(latitude) adminUpdate.locationCoordinates.latitude = latitude
-        if(longitude) adminUpdate.locationCoordinates.longitude = longitude
+        if (latitude) adminUpdate.locationCoordinates.latitude = latitude
+        if (longitude) adminUpdate.locationCoordinates.longitude = longitude
 
 
         await adminUpdate.save()
@@ -144,5 +144,22 @@ export async function adminUpdate(req, res) {
     catch (error) {
         console.log(error);
         return res.status(500).send({ error: "Server error" });
+    }
+}
+
+export async function showHackathon(req, res) {
+    try {
+        const adminId = req.params.adminId
+
+        const fetchHackathon = await admin.findById(adminId)
+        if (!fetchHackathon) return res.status(404).json({ message: "Admin Not Found" })
+          
+           const hackathons =  fetchHackathon.Hackathon
+            res.status(200).json({message:"Hackathon Showing Successfully",hackathons})
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Internal Server Error" })
+
     }
 }
