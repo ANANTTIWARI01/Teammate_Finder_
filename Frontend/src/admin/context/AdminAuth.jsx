@@ -8,11 +8,10 @@ export const AuthContext = createContext({});
 function AdminAuth({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [adminId, setAdminId] = useState("")
-  const [hackathons, setHackathons] = useState([])
+  // const [adminId, setAdminId] = useState("")
 
-
-
+  
+  
   async function checkAuthentication() {
     try {
       setLoading(true);
@@ -29,23 +28,13 @@ function AdminAuth({ children }) {
   useEffect(() => {
     checkAuthentication();
   }, []);
+  
+  
+  
 
 
-  useEffect(() => {
-    showHackathon()
-  }, [adminId])
-
-  const showHackathon = async () => {
-    try {
-      const response = await instance.get(`/admin/${adminId}/hackathons`)
-      // console.log(response.data.hackathons);
-      setHackathons(response.data.hackathons)
-    } catch (error) {
-      console.log(error, error.message);
-
-    }
-  }
-
+  
+  
   async function AdminLogoutHandle() {
     try {
       await instance.post(
@@ -62,10 +51,12 @@ function AdminAuth({ children }) {
     }
   }
 
+  
+
   return (
     <AuthContext.Provider
-      value={{ loading, isAuthenticated, setIsAuthenticated, AdminLogoutHandle, setAdminId, hackathons }}
-    >
+      value={{ loading, isAuthenticated, setIsAuthenticated, AdminLogoutHandle }}
+      >
       {children}
     </AuthContext.Provider>
   );

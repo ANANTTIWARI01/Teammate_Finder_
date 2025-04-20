@@ -79,8 +79,9 @@ function App() {
     <>
       <AdminAuth>
         <AdminProtectedRoute>
-          <RouterProvider router={router} />
+    <RouterProvider router={router} />
         </AdminProtectedRoute>
+          {/* </RouterProvider> */}
       </AdminAuth>
     </>
   )
