@@ -10,7 +10,7 @@ function HackathonForm() {
     date: "",
     registrationLink: "",
     hackathonLink: "",
-    image: null, // Store the file object here
+    image: null, 
   });
 
   const { id } = useParams();
@@ -20,16 +20,15 @@ function HackathonForm() {
 
     setFormData((prevState) => ({
       ...prevState,
-      [name]: files ? files[0] : value, // Store the file if it's an upload
+      [name]: files ? files[0] : value, 
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted: ", formData);
+    // console.log("Form Data Submitted: ", formData);
 
     try {
-      // Create FormData object
       const data = new FormData();
       data.append("name", formData.name);
       data.append("mode", formData.mode);
@@ -38,16 +37,17 @@ function HackathonForm() {
       data.append("registrationLink", formData.registrationLink);
       data.append("hackathonLink", formData.hackathonLink);
       if (formData.image) {
-        data.append("image", formData.image); // Append the image file
+        data.append("image", formData.image);
       }
 
-      // Send the form data to the server
-      await instance.post(`/admin/addHackathon/${id}`, data, {
+     const response =  await instance.post(`/admin/addHackathon/${id}`, data, {
         withCredentials: true,
         headers: {
-          "Content-Type": "multipart/form-data", // Important for file uploads
+          "Content-Type": "multipart/form-data", 
         },
       });
+      console.log(response);
+      
     } catch (error) {
       console.log(error, error.message);
     }
@@ -171,7 +171,7 @@ function HackathonForm() {
           type="file"
           id="image"
           name="image"
-          onChange={handleChange} // No value for file inputs
+          onChange={handleChange} 
           className="w-full p-2 border border-gray-300 rounded"
           accept="image/*"
         />

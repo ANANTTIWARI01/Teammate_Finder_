@@ -42,7 +42,7 @@ export async function addHackathon(req, res) {
         Admin.Hackathon.push(newHackathon);
         await Admin.save();
 
-        res.status(200).json({ message: "Hackathon added successfully" });
+        res.status(200).json({ message: "Hackathon added successfully",    });
     } catch (error) {
         console.error(error.stack);
         return res.status(500).json({
