@@ -11,11 +11,12 @@ function AdminHome() {
           <div className="w-[60%] h-[40%] bg-gray-300 rounded-full mb-6 shadow-lg">
             {/* Placeholder for Admin Photo */}
           </div>
-          <button
+          <Link
             className="text-white bg-indigo-500 px-6 py-3 rounded-xl hover:bg-indigo-600 transition duration-300"
+            to={`/admin/${id}/editAdminProfile`}
           >
             Edit Profile
-          </button>
+          </Link>
         </div>
 
         {/* Main Content Section */}

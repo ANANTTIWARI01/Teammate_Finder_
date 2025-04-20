@@ -3,7 +3,7 @@ import dotenv from 'dotenv/config';
 
 const authCheckMiddleware = (tokenKey) => (req, res, next) => {
     const token = tokenKey === "admin" ? req.cookies.adminToken : req.cookies.userToken
-    console.log(token);
+    // console.log(token);
     
     if (!token) {
         console.log("token missing");

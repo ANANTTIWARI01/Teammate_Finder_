@@ -116,7 +116,7 @@ export async function updateHackathon(req, res) {
 export async function adminUpdate(req, res) {
     try {
         const adminId = req.params.adminId
-        const { name, email, organizationName, locationName, description } = req.body
+        const { name, email, organizationName, locationName, description,latitude,longitude } = req.body
 
         const adminUpdate = await admin.findById(adminId)
 
@@ -133,6 +133,9 @@ export async function adminUpdate(req, res) {
         if (description) adminUpdate.description = description;
         if (organizationName) adminUpdate.organizationName = organizationName;
         if (locationName) adminUpdate.locationName = locationName;
+        if(latitude) adminUpdate.locationCoordinates.latitude = latitude
+        if(longitude) adminUpdate.locationCoordinates.longitude = longitude
+
 
         await adminUpdate.save()
 
