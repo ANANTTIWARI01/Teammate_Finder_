@@ -24,7 +24,7 @@ function AdminLogin() {
       console.log(response.data);
       
       setIsAuthenticated(true);
-      navigate(`/admin/home/${response.data.admin.id}`);
+      navigate(`/admin/home`);
     } catch (error) {
       console.log("Login error:", error);
     }
