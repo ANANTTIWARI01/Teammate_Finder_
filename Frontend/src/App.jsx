@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import First from "./First";
 import Home from "./user/pages/Home";
-import Login from "./user/pages/Login";
+import Login from "./user/pages/UserLogin";
 import Register from "./user/pages/Register";
 import AdminFirst from "./admin/pages/AdminFirst";
 import AdminHome from "./admin/pages/AdminHome";
@@ -12,6 +12,8 @@ import AddHackathonAdmin from "./admin/pages/AddHackathonAdmin";
 import AdminAuth from "./admin/context/AdminAuth";
 import EditAdminProfile from "./admin/pages/EditAdminProfile";
 import EditHackathon from "./admin/pages/EditHackathon";
+import UserProtectedRoute from "./user/pages/UserProtectedRoute";
+import UserAuth from "./user/context/UserAuth";
 
 // import ImageUpload from "./admin/pages/ImageUpload"
 
@@ -24,14 +26,17 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element:
+        <UserProtectedRoute>
+         <Home />
+         </UserProtectedRoute>
       },
       {
-        path: "/userLogin",
+        path: "userLogin",
         element: <Login />
       },
       {
-        path: "/userRegister",
+        path: "userRegister",
         element: <Register />
       }
     ]
@@ -85,7 +90,9 @@ function App() {
   return (
     <>
       <AdminAuth>
+        <UserAuth>
         <RouterProvider router={router} />
+        </UserAuth>
       </AdminAuth>
     </>
   )

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import instance from "../../../axiosConfig";
-import { Link } from "react-router-dom";
+import { useUserAuth } from "../context/UserAuth";
 
-function Register() {
+function UserLogin() {
+  const { setIsAuthenticated } = useUserAuth();
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    name: "",
     email: "",
     password: "",
   });
@@ -13,35 +15,31 @@ function Register() {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   }
+
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await instance.post("/auth/user/register", form, { withCredentials: true });
-      console.log(response);
+      await instance.post("/auth/user/login", form, { withCredentials: true });
+      setIsAuthenticated(true);
+      navigate(`/`);
     } catch (error) {
-      console.log(error);
+      console.log("Login error:", error);
     }
   }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-900">
       <div className="w-full max-w-md bg-gray-800 text-white rounded-lg shadow-lg p-6">
-        <h1 className="text-2xl font-bold mb-6 text-center">User Register</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">User Login</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Enter name"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          />
           <input
             type="email"
             placeholder="Enter email"
             name="email"
             value={form.email}
             onChange={handleChange}
+            autoFocus
+            autoComplete="email"
             className="w-full px-4 py-2 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
           <input
@@ -50,21 +48,22 @@ function Register() {
             name="password"
             value={form.password}
             onChange={handleChange}
+            autoComplete="current-password"
             className="w-full px-4 py-2 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
           <button
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md font-semibold"
           >
-            Register
+            Login
           </button>
         </form>
         <div className="mt-4 text-center">
           <Link
-            to="/userLogin"
+            to="/userRegister"
             className="text-blue-400 hover:underline font-medium"
           >
-            Login as User
+            Register as User
           </Link>
         </div>
       </div>
@@ -72,4 +71,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default UserLogin;

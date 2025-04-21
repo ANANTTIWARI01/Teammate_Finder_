@@ -138,11 +138,8 @@ export async function userLogin(req, res) {
             httpOnly: true,
             secure: false,
             sameSite: "strict"
-        })
-
-        res.status(200).json({
+        }).send({
             message: "User Logged in Successfully",
-            token: userToken,
             admin: {
                 id: User._id,
                 email: User.email
