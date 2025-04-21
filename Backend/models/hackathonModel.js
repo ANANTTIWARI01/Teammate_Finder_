@@ -1,5 +1,5 @@
-// import mongoose, { Schema } from "mongoose"
+import mongoose, { Schema } from "mongoose"
 
 
-// const hackathon = mongoose.model("hackathon", hackathonSchema)
-// export default hackathon;
+const hackathon = mongoose.model("hackathon", hackathonSchema)
+export default hackathon;

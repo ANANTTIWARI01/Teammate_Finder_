@@ -9,7 +9,7 @@ function AdminProtectedRoute({ children }) {
     return <div id="loading">LOADING...</div>;
   }
 
-  return isAuthenticated ? children : <Navigate to="/admin/login" replace />;
+  return isAuthenticated ? children : <AdminLogin />;
 }
 
 export default AdminProtectedRoute;

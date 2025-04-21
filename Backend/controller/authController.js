@@ -50,13 +50,12 @@ export async function adminLogin(req, res) {
             { expiresIn: "1h" }
         )
 
+        
         res.cookie("adminToken", adminToken, {
             httpOnly: true,
             secure: false,
             sameSite: "strict"
-        })
-
-        res.status(200).json({
+        }).send({
             message: "Admin Logged in Successfully",
             admin: {
                 id: Admin._id,

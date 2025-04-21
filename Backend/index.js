@@ -6,7 +6,7 @@ import cors from "cors"
 import { connectDB } from "./connection/db.js"
 import cookieParser from "cookie-parser"
 import admin from "./models/adminModel.js"
-
+import userRouter from "./routes/userRoute.js"
 
 const PORT = process.env.PORT
 const app = express()
@@ -28,7 +28,7 @@ connectDB()
 
 app.use("/api/auth", authRouter)
 app.use("/api/admin",adminRouter)
-// app.use("/api/user",userRouter)
+app.use("/api/user",userRouter)
 
 
 app.listen(PORT, () => console.log(`server is running on ${PORT}`)

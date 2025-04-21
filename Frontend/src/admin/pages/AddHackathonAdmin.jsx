@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import instance from "../../../axiosConfig";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function HackathonForm() {
   const [formData, setFormData] = useState({
@@ -13,8 +13,8 @@ function HackathonForm() {
     image: null, 
   });
 
-  const { id } = useParams();
-
+  // const { id } = useParams();
+const navigate = useNavigate()
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -40,14 +40,13 @@ function HackathonForm() {
         data.append("image", formData.image);
       }
 
-     const response =  await instance.post(`/admin/addHackathon/${id}`, data, {
+       await instance.post(`/admin/addHackathon`, data, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data", 
         },
       });
-      console.log(response);
-      
+      navigate("/admin/home")
     } catch (error) {
       console.log(error, error.message);
     }

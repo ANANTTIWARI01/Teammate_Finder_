@@ -10,12 +10,10 @@ function AdminAuth({ children }) {
   const [loading, setLoading] = useState(true);
   // const [adminId, setAdminId] = useState("")
 
-  
-  
   async function checkAuthentication() {
     try {
       setLoading(true);
-      await instance.get("/auth/check", { withCredentials: true });
+      await instance.get("/auth/checkAdmin", { withCredentials: true });
       setIsAuthenticated(true);
     } catch (error) {
       console.error("Authentication error:", error);
@@ -29,16 +27,10 @@ function AdminAuth({ children }) {
     checkAuthentication();
   }, []);
   
-  
-  
-
-
-  
-  
   async function AdminLogoutHandle() {
     try {
       await instance.post(
-        "/auth/logout",
+        "/auth/admin/logout",
         {},
         {
           withCredentials: true,
@@ -51,7 +43,6 @@ function AdminAuth({ children }) {
     }
   }
 
-  
 
   return (
     <AuthContext.Provider

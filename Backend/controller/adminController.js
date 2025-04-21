@@ -3,8 +3,10 @@ import admin from "../models/adminModel.js";
 
 export async function addHackathon(req, res) {
     try {
-        const id = req.params.id;
+        const id = req.admin;
         const file = req.file;
+        // const { anantId}  = req.user
+console.log(id);
 
         // checking file type
         if (!file || !file.mimetype.startsWith("image/")) {
@@ -37,6 +39,7 @@ export async function addHackathon(req, res) {
             date,
             image: secure_url,
         };
+console.log(Admin);
 
         // saving the hackathon data into the admin
         Admin.Hackathon.push(newHackathon);
@@ -54,7 +57,7 @@ export async function addHackathon(req, res) {
 
 export async function deleteHackathon(req, res) {
     try {
-        const adminId = req.params.adminId
+        const adminId = req.admin
         const hackathonId = req.params.hackathonId
 
         if (!adminId || !hackathonId) return res.status(404).send({ message: "Hackathon ID is required" })
@@ -78,7 +81,8 @@ export async function deleteHackathon(req, res) {
 
 export async function updateHackathon(req, res) {
     try {
-        const adminId = req.params.adminId
+        const adminId = req.admin
+
         const hackathonId = req.params.hackathonId
 
         const { name, date, mode, description, registrationLink, hackathonLink } = req.body
@@ -115,7 +119,7 @@ export async function updateHackathon(req, res) {
 
 export async function adminUpdate(req, res) {
     try {
-        const adminId = req.params.adminId
+        const adminId = req.admin
         const { name, email, organizationName, locationName, description, latitude, longitude } = req.body
 
         const adminUpdate = await admin.findById(adminId)
@@ -149,7 +153,8 @@ export async function adminUpdate(req, res) {
 
 export async function showHackathon(req, res) {
     try {
-        const adminId = req.params.adminId
+        // const adminId = req.params.adminId
+        const adminId  = req.admin;
 
         const fetchHackathon = await admin.findById(adminId)
         if (!fetchHackathon) return res.status(404).json({ message: "Admin Not Found" })
@@ -166,10 +171,11 @@ export async function showHackathon(req, res) {
 
 export async function showAdminData(req, res) {
     try {
-const adminId = req.params.adminId
-const adminData = await admin.findById(adminId)
-if (!adminData) return res.status(404).json({ message: "Admin Not Found" })
-    res.status(200).json({ message: "Admin Data Showing Successfully", adminData })
+        const adminId = req.admin
+
+        const adminData = await admin.findById(adminId)
+        if (!adminData) return res.status(404).json({ message: "Admin Not Found" })
+        res.status(200).json({ message: "Admin Data Showing Successfully", adminData })
 
     } catch (error) {
         console.log(error);

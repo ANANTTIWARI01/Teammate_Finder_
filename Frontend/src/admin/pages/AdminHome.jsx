@@ -2,45 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 // import { useAdminAuth } from "../context/AdminAuth";
 import instance from "../../../axiosConfig";
+import EditHackathon from "./EditHackathon";
 
 function AdminHome() {
   const { id } = useParams();
   const [hackathonId, setHackathonId] = useState("")
   const [hackathons, setHackathons] = useState([])
-  const [adminData,setAdminData] = useState([])
+  const [adminData, setAdminData] = useState([])
 
   useEffect(() => {
-    showHackathon()
-  }, [id])
-
-  const showHackathon = async () => {
-    try {
-      const response = await instance.get(`/admin/${id}/hackathons`)
-      // console.log(response.data.hackathons);
-      setHackathons(response.data.hackathons)
-    } catch (error) {
-      console.log(error, error.message);
-
-    }
-  }
-
-useEffect(()=>{
-showAdminData()
-},[])
-
-  const showAdminData = async()=>{
+    showAdminData()
+  }, [])
+                                                        
+  const showAdminData = async () => {                    
     try {
       const response = await instance.get(`/admin/${id}`)
+      console.log(response);
+      
       setAdminData(response.data.adminData);
-      // console.log(response.data.adminData);
-      
-      
+      setHackathons(response.data.adminData.Hackathon)
     } catch (error) {
       console.log(error, error.message);
     }
   }
-  console.log(adminData);
-  
 
   useEffect(() => {
     deletingHackathon()
@@ -48,8 +32,7 @@ showAdminData()
 
   const deletingHackathon = async () => {
     try {
-      const response = await instance.delete(`/admin/${id}/deletehackathon/${hackathonId}`);
-      console.log(response);
+      await instance.delete(`/admin/${id}/deletehackathon/${hackathonId}`);
 
       setHackathons((prev) => prev.filter(hackathon => hackathon._id !== hackathonId));
 
@@ -57,6 +40,7 @@ showAdminData()
       console.log(error, error.message);
     }
   };
+
 
   return (
     <>
@@ -80,7 +64,7 @@ showAdminData()
           {/* Add Hackathon Button */}
           <div className="mb-6">
             <Link
-              to={`/admin/addHackathon/${id}`}
+              to={`/admin/addHackathon`}
               className="text-white bg-blue-500 px-10 py-3 rounded-full hover:bg-blue-600 shadow-lg transition duration-300 inline-block"
             >
               Add Hackathon
@@ -103,14 +87,14 @@ showAdminData()
                   <h1 className="text-lg font-bold text-gray-800">
                     {hackathon.name}
                   </h1>
-                  <div className="flex items-center justify-center">
-                    <h3 className="text-md font-semibold text-gray-800">{hackathon.date}</h3>
+                  <div className="flex items-center justify-around">
+                    <h3 className="text-md font-semibold text-gray-800">{hackathon.date.slice(0, 11)}</h3>
                     <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
                   </div>
                   <p className="text-gray-600 mt-2">{hackathon.description}</p>
                   <div className="flex items-center justify-around">
                     <button className="text-white bg-indigo-500 px-5 py-2 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300" onClick={() => setHackathonId(hackathon._id)} >Delete</button>
-                    <button className="text-white bg-green-500 px-5 py-2 rounded-lg hover:bg-green-600 shadow-md transition duration-300" >Edit</button>
+                    <Link className="text-white bg-green-500 px-5 py-2 rounded-lg hover:bg-green-600 shadow-md transition duration-300" to={`/admin/${hackathon._id}/editHackathon`} >Edit</Link>
 
                   </div>
                 </div>

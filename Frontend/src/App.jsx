@@ -11,6 +11,7 @@ import AdminProtectedRoute from "./admin/pages/AdminProtectedRoute";
 import AddHackathonAdmin from "./admin/pages/AddHackathonAdmin";
 import AdminAuth from "./admin/context/AdminAuth";
 import EditAdminProfile from "./admin/pages/EditAdminProfile";
+import EditHackathon from "./admin/pages/EditHackathon";
 
 // import ImageUpload from "./admin/pages/ImageUpload"
 
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
     element: <AdminFirst />,
     children: [
       {
-        path: "home/:id",
+        path: "home",
         element:
           <AdminProtectedRoute>
             <AdminHome />
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
         element: <AdminRegister />
       },
       {
-        path: "addHackathon/:id",
+        path: "addHackathon",
         element:
           <AdminProtectedRoute>
             <AddHackathonAdmin />
@@ -67,6 +68,12 @@ const router = createBrowserRouter([
           <AdminProtectedRoute>
             <EditAdminProfile />
           </AdminProtectedRoute>
+      },
+      {
+        path: ":hId/editHackathon",
+        element: <AdminProtectedRoute>
+          <EditHackathon />
+        </AdminProtectedRoute>
       }
     ]
   }
@@ -78,10 +85,7 @@ function App() {
   return (
     <>
       <AdminAuth>
-        <AdminProtectedRoute>
-    <RouterProvider router={router} />
-        </AdminProtectedRoute>
-          {/* </RouterProvider> */}
+        <RouterProvider router={router} />
       </AdminAuth>
     </>
   )
