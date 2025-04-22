@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
   export const checkUser = (req, res, next)=> {
 
     const token = req.cookies.userToken;
-console.log(token);
+// console.log(token);
 
     if (!token) return res.status(401).send({ message: "No Token Found" });
     try {
@@ -18,4 +18,4 @@ console.log(token);
     }
 }
 
-export default checkUser;
+// export default checkUser

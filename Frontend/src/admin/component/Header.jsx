@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <header className="bg-blue-600 text-white px-4 py-4 shadow-md flex justify-between items-center">
-      <h1 className="text-xl font-bold">Test System Admin Dashboard</h1>
+      <h1 className="text-xl font-bold"> Admin Dashboard</h1>
       {isAuthenticated ? (
         <button
           onClick={() => handleLogout()}
