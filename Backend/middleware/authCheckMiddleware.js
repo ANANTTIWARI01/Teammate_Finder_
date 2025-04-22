@@ -25,7 +25,7 @@ import admin from "../models/adminModel.js";
 // export default authCheckMiddleware;
 
 export function checkAdmin(req, res, next) {
-console.log(req.cookies);
+// console.log(req.cookies);
 
     const token = req.cookies.adminToken;
 

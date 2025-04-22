@@ -50,7 +50,7 @@ export async function adminLogin(req, res) {
             { expiresIn: "1h" }
         )
 
-        
+
         res.cookie("adminToken", adminToken, {
             httpOnly: true,
             secure: false,
@@ -134,7 +134,7 @@ export async function userLogin(req, res) {
             { expiresIn: "1h" }
         )
 
-        res.cookie("UserToken", userToken, {
+        res.cookie("userToken", userToken, {
             httpOnly: true,
             secure: false,
             sameSite: "strict"
