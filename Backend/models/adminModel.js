@@ -33,6 +33,7 @@ const hackathonSchema = new Schema({
 }, { timestamps: true })
 
 
+
 const adminSchema = new Schema({
     name: {
         type: String,

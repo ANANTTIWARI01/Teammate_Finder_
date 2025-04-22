@@ -39,7 +39,8 @@ const userSchema = new Schema({
     teammates: [{
         type: mongoose.Types.ObjectId,
         ref: "user"
-    }]
+    }],
+    isLoggedIn: { type: Boolean, default: false }
 
 }, { timestamps: true })
 

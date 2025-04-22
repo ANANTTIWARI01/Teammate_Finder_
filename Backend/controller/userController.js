@@ -21,3 +21,20 @@ export async function fetchAllHackathons(req, res) {
         });
     }
 }
+
+export const updateLoginStatus = async (req, res) => {
+    const {  isLoggedIn } = req.body;
+  const id  = req.user
+    try {
+      const User = await user.findByIdAndUpdate(id, { isLoggedIn }, { new: true });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      res.json({ message: `user ${isLoggedIn ? "logged in" : "logged out"}`, User });
+    } catch (error) {
+      console.error("Error updating login status:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  };
+  

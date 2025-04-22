@@ -84,6 +84,20 @@ export async function logoutAdmin(req, res) {
     }
 }
 
+export async function logoutUser(req, res) {
+    try {
+        res.clearCookie("userToken", {
+            httpOnly: false,
+            secure: false,
+            sameSite: "strict",
+        })
+        res.status(200).send({ message: "Logged out" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({ mesage: error.message })
+    }
+}
+
 
 
 export async function userRegister(req, res) {
