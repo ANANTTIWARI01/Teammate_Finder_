@@ -14,6 +14,8 @@ import EditAdminProfile from "./admin/pages/EditAdminProfile";
 import EditHackathon from "./admin/pages/EditHackathon";
 import UserProtectedRoute from "./user/pages/UserProtectedRoute";
 import UserAuth from "./user/context/UserAuth";
+import EditUser from "./user/pages/EditUser";
+import UserAvailable from "./user/pages/UserAvailable";
 
 // import ImageUpload from "./admin/pages/ImageUpload"
 
@@ -29,6 +31,20 @@ const router = createBrowserRouter([
         element:
           <UserProtectedRoute>
             <Home />
+          </UserProtectedRoute>
+      },
+      {
+        path: "editUser",
+        element:
+          <UserProtectedRoute>
+            <EditUser />
+          </UserProtectedRoute>
+      },
+      {
+        path: "userAvailable",
+        element:
+          <UserProtectedRoute>
+            <UserAvailable />
           </UserProtectedRoute>
       },
       {

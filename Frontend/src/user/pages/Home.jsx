@@ -15,7 +15,7 @@ function Home() {
   const showAdminData = async () => {
     try {
       const response = await instance.get(`/user/hackathons`)
-      console.log(response.data);
+      // console.log(response.data.user);
 
       // setUserData(response.data.adminData);
       setHackathons(response.data.hackathons)
@@ -37,9 +37,15 @@ function Home() {
           </div>
           <Link
             className="text-white bg-indigo-500 px-8 py-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300"
-            to=""
+            to="/editUser"
           >
             Edit Profile
+          </Link>
+          <Link
+            className="text-white bg-indigo-500 px-8 py-3 my-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300"
+            to="/userAvailable"
+          >
+            Available User
           </Link>
         </div>
 

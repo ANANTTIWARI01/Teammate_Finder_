@@ -22,7 +22,7 @@ const userSchema = new Schema({
         type: String,
         // required: true
     },
-    Hackmode: {
+    mode: {
         type: String,
         enum: ["offline", "online"],
         // required: true
@@ -40,7 +40,20 @@ const userSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "user"
     }],
-    isLoggedIn: { type: Boolean, default: false }
+    isLoggedIn: {
+        type: Boolean,
+        default: false
+    },
+    locationCoordinates: {
+        latitude: {
+            type: String,
+            // required: true
+        },
+        longitude: {
+            type: String,
+            //  required: true
+        }
+    },
 
 }, { timestamps: true })
 

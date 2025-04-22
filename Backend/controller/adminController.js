@@ -127,10 +127,10 @@ export async function adminUpdate(req, res) {
         if (!adminUpdate) return res.status(404).json({ message: "Admin not found" })
 
         if (req.file) {
-            const secure_url = await uploadToCloudinary(req).catch((err) => {
-                throw new Error("Cloudinary upload failed");
-            });
-            adminUpdate.image = secure_url
+                const secure_url = await uploadToCloudinary(req).catch((err) => {
+                    throw new Error("Cloudinary upload failed");
+                });
+                adminUpdate.image = secure_url
         }
         if (name) adminUpdate.name = name;
         if (email) adminUpdate.email = email;
