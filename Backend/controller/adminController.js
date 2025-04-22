@@ -151,23 +151,23 @@ export async function adminUpdate(req, res) {
     }
 }
 
-export async function showHackathon(req, res) {
-    try {
-        // const adminId = req.params.adminId
-        const adminId  = req.admin;
+// export async function showHackathon(req, res) {
+//     try {
+//         // const adminId = req.params.adminId
+//         const adminId  = req.admin;
 
-        const fetchHackathon = await admin.findById(adminId)
-        if (!fetchHackathon) return res.status(404).json({ message: "Admin Not Found" })
+//         const fetchHackathon = await admin.findById(adminId)
+//         if (!fetchHackathon) return res.status(404).json({ message: "Admin Not Found" })
 
-        const hackathons = fetchHackathon.Hackathon
-        res.status(200).json({ message: "Hackathon Showing Successfully", hackathons })
+//         const hackathons = fetchHackathon.Hackathon
+//         res.status(200).json({ message: "Hackathon Showing Successfully", hackathons })
 
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Internal Server Error" })
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(500).json({ message: "Internal Server Error" })
 
-    }
-}
+//     }
+// }
 
 export async function showAdminData(req, res) {
     try {

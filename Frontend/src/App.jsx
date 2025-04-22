@@ -27,9 +27,9 @@ const router = createBrowserRouter([
       {
         index: true,
         element:
-        <UserProtectedRoute>
-         <Home />
-         </UserProtectedRoute>
+          <UserProtectedRoute>
+            <Home />
+          </UserProtectedRoute>
       },
       {
         path: "userLogin",
@@ -75,7 +75,7 @@ const router = createBrowserRouter([
           </AdminProtectedRoute>
       },
       {
-        path: ":hId/editHackathon",
+        path: ":id/editHackathon",
         element: <AdminProtectedRoute>
           <EditHackathon />
         </AdminProtectedRoute>
@@ -91,7 +91,7 @@ function App() {
     <>
       <AdminAuth>
         <UserAuth>
-        <RouterProvider router={router} />
+          <RouterProvider router={router} />
         </UserAuth>
       </AdminAuth>
     </>
