@@ -1,5 +1,5 @@
 import express from "express"
- import {fetchAllHackathons,updateLoginStatus,findNearByUser,userUpdate} from "../controller/userController.js"
+ import {fetchAllHackathons,updateLoginStatus,findNearByUser,userUpdate,fetchHackathon} from "../controller/userController.js"
  import checkUser from "../middleware/UserCheckMiddleware.js"
 import upload from "../middleware/multerMiddleware.js"
  
@@ -9,5 +9,6 @@ router.get("/hackathons",checkUser,fetchAllHackathons)
 router.post("/update-login-status", updateLoginStatus);
 router.get("/nearby-users",checkUser,findNearByUser)
 router.put("/userPanelUpdate",checkUser, upload.single("image"),userUpdate)
+router.get("/:hackathonId",fetchHackathon)
 export default router;
 

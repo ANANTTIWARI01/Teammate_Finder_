@@ -61,6 +61,7 @@ function Home() {
                   key={index}
                   className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow duration-300"
                 >
+                  <Link to={`${hackathon.name}/${hackathon._id}`}>
                   <img
                     src={hackathon.image}
                     alt={`Hackathon ${hackathon.name}`}
@@ -74,7 +75,7 @@ function Home() {
                     <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
                   </div>
                   <p className="text-gray-600 mt-2">{hackathon.description}</p>
-
+                  </Link>
                 </div>
               ))}
             </div>

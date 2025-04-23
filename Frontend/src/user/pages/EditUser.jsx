@@ -114,14 +114,14 @@ function EditUser() {
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Enter email Name"
+                    placeholder="Enter email "
                 />
             </div>
 
             {/* Location Field */}
             <div>
                 <label htmlFor="address" className="block mb-2 font-medium">
-                    Location Name
+                     City Name
                 </label>
                 <input
                     type="text"
@@ -130,7 +130,7 @@ function EditUser() {
                     value={formData.address}
                     onChange={handleChange}
                     className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Enter Location Name"
+                    placeholder="Enter City Name"
                     required
                 />
             </div>
@@ -139,7 +139,7 @@ function EditUser() {
 
             <div>
                 <label htmlFor="skills" className="block mb-2 font-medium">
-                    skills Name
+                    Skills 
                 </label>
                 <input
                     type="text"
@@ -148,7 +148,7 @@ function EditUser() {
                     value={formData.skills}
                     onChange={handleChange}
                     className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Enter Location Name"
+                    placeholder="Skills (separate each skill by comma)"
                 // required
                 />
             </div>
@@ -196,7 +196,7 @@ function EditUser() {
                     value={formData.projects}
                     onChange={handleChange}
                     className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Enter registration link"
+                    placeholder="Enter Projects link  (separate each project link by comma)"
                     required
                 />
             </div>
@@ -213,7 +213,7 @@ function EditUser() {
                     value={formData.pastAttendedHackathons}
                     onChange={handleChange}
                     className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Enter registration link"
+                    placeholder="Enter Past Attended Hackathons link (separate each hackathon link by comma)"
                     required
                 />
             </div>

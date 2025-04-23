@@ -92,12 +92,12 @@ export async function userUpdate(req, res) {
 
     if (name) userUpdate.name = name;
     if (email) userUpdate.email = email;
-    if (skills) userUpdate.skills = [...(userUpdate.skills || []), ...skills.split(" ")];
-    if (projects) userUpdate.projects = [...(userUpdate.projects || []), ...projects.split(" ")];
+    if (skills) userUpdate.skills = [...(userUpdate.skills || []), ...skills.split(",")];
+    if (projects) userUpdate.projects = [...(userUpdate.projects || []), ...projects.split(",")];
     if (address) userUpdate.address = address;
     if (latitude) userUpdate.locationCoordinates.latitude = latitude
     if (longitude) userUpdate.locationCoordinates.longitude = longitude
-    if (pastAttendedHackathons) userUpdate.pastAttendedHackathons = [...(userUpdate.pastAttendedHackathons || []), ...pastAttendedHackathons.split(" ")]
+    if (pastAttendedHackathons) userUpdate.pastAttendedHackathons = [...(userUpdate.pastAttendedHackathons || []), ...pastAttendedHackathons.split(",")]
     if (mode) userUpdate.mode = mode
 
     await userUpdate.save();
@@ -107,5 +107,27 @@ export async function userUpdate(req, res) {
   } catch (error) {
     console.log(error, error.message);
     return res.status(500).send({ error: "Server error", });
+  }
+}
+
+export async function fetchHackathon(req, res) {
+  try {
+    const HackathonId = req.params.hackathonId
+
+    const admins = await admin.find({}, "Hackathon").lean();
+
+    const hackathons = admins.flatMap((admin) => admin.Hackathon)
+
+    const singleHackathon = hackathons.find((obj) => { return (HackathonId.toString() === obj._id.toString()) })
+
+    res.status(200).json({ message: "Hackathon Found Successfully", singleHackathon })
+
+  }
+  catch (error) {
+    console.error("Error fetching hackathon:", error.message);
+    res.status(500).json({
+      message: "Server Error while fetching hackathon",
+      error: error.message
+    });
   }
 }

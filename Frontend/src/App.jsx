@@ -16,6 +16,7 @@ import UserProtectedRoute from "./user/pages/UserProtectedRoute";
 import UserAuth from "./user/context/UserAuth";
 import EditUser from "./user/pages/EditUser";
 import UserAvailable from "./user/pages/UserAvailable";
+import SingleHackathon from "./user/pages/SingleHackathon";
 
 // import ImageUpload from "./admin/pages/ImageUpload"
 
@@ -45,6 +46,13 @@ const router = createBrowserRouter([
         element:
           <UserProtectedRoute>
             <UserAvailable />
+          </UserProtectedRoute>
+      },
+      {
+        path: ":hackathonName/:id",
+        element:
+          <UserProtectedRoute>
+            <SingleHackathon />
           </UserProtectedRoute>
       },
       {
