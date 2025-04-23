@@ -53,7 +53,7 @@ export async function adminLogin(req, res) {
 
         res.cookie("adminToken", adminToken, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "none",
             maxAge: 3600000
         }).send({
@@ -75,7 +75,7 @@ export async function logoutAdmin(req, res) {
     try {
         res.clearCookie("adminToken", {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "none",
         })
         res.status(200).send({ message: "Logged out" });
@@ -89,7 +89,7 @@ export async function logoutUser(req, res) {
     try {
         res.clearCookie("userToken", {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "none",
         })
         res.status(200).send({ message: "Logged out" });
@@ -151,7 +151,7 @@ export async function userLogin(req, res) {
 
         res.cookie("userToken", userToken, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "none",
             maxAge: 3600000
         }).send({
