@@ -3,7 +3,9 @@ import instance from "../../../axiosConfig";
 // import { useParams } from "react-router-dom";
 import axios from "axios";
 import UserAvailable from "./UserAvailable";
+import { useNavigate } from "react-router-dom";
 // import AdminHome from "./AdminHome";
+import { MdAdd } from "react-icons/md";
 
 function EditUser() {
     const [formData, setFormData] = useState({
@@ -19,7 +21,7 @@ function EditUser() {
 
     });
 
-    // const { id } = useParams();
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -72,6 +74,8 @@ function EditUser() {
             data.append("address", formData.address);
             data.append("latitude", formData.latitude);
             data.append("longitude", formData.longitude);
+            data.append("projects", formData.projects)
+            data.append("pastAttendedHackathons", formData.pastAttendedHackathons)
             if (formData.image) {
                 data.append("image", formData.image);
             }
@@ -83,10 +87,12 @@ function EditUser() {
                 },
             });
             console.log("Profile updated successfully!");
+            navigate("/")
         } catch (error) {
             console.log("Error updating profile:", error.message);
         }
     };
+
 
 
 
@@ -96,6 +102,21 @@ function EditUser() {
             className="flex flex-col gap-4 p-6 bg-gray-100 shadow-lg rounded-md"
         >
             <h2 className="text-2xl font-bold text-center mb-4">Edit User Profile</h2>
+
+            {/* Email Field */}
+            <div>
+                <label htmlFor="email" className="block mb-2 font-medium">
+                    Email
+                </label>
+                <input type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    placeholder="Enter email Name"
+                />
+            </div>
 
             {/* Location Field */}
             <div>
@@ -114,6 +135,8 @@ function EditUser() {
                 />
             </div>
 
+            {/* {skills field} */}
+
             <div>
                 <label htmlFor="skills" className="block mb-2 font-medium">
                     skills Name
@@ -126,22 +149,7 @@ function EditUser() {
                     onChange={handleChange}
                     className="w-full p-2 border border-gray-300 rounded"
                     placeholder="Enter Location Name"
-                    required
-                />
-            </div>
-
-            {/* Organization Field */}
-            <div>
-                <label htmlFor="email" className="block mb-2 font-medium">
-                    Email
-                </label>
-                <input type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Enter email Name"
+                // required
                 />
             </div>
 
@@ -175,6 +183,42 @@ function EditUser() {
                     Longitude: {formData.longitude || "Not fetched yet"}
                 </p>
             </div>
+
+            {/* Projects Link Field */}
+            <div>
+                <label htmlFor="projects" className="block mb-2 font-medium">
+                    Projects Link
+                </label>
+                <input
+                    type="url"
+                    id="projects"
+                    name="projects"
+                    value={formData.projects}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    placeholder="Enter registration link"
+                    required
+                />
+            </div>
+
+            {/* PastAttended Hackathon Link Field */}
+            <div>
+                <label htmlFor="pastAttendedHackathons" className="block mb-2 font-medium">
+                    Past Attended Hackathons Link
+                </label>
+                <input
+                    type="url"
+                    id="pastAttendedHackathons"
+                    name="pastAttendedHackathons"
+                    value={formData.pastAttendedHackathons}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    placeholder="Enter registration link"
+                    required
+                />
+            </div>
+
+
             {/* Image Field */}
             <div>
                 <label htmlFor="image" className="block mb-2 font-medium">

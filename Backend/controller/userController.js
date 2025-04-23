@@ -1,19 +1,23 @@
 import uploadToCloudinary from "../middleware/cloudinaryMiddleware.js";
 import admin from "../models/adminModel.js"
+// import user from "../models/userModel.js";
 import user from "../models/userModel.js"
 import { getDistance } from "../utils/DistanceCalculator.js";
 
 
 
 export async function fetchAllHackathons(req, res) {
+  const userId = req.user
   try {
+
     const admins = await admin.find({}, "Hackathon").lean();
 
     const hackathons = admins.flatMap(admin => admin.Hackathon);
-
+    const myUser = await user.findById(userId)
     res.status(200).json({
       message: "Hackathons fetched successfully",
-      hackathons: hackathons
+      hackathons: hackathons,
+      myUser
     });
   } catch (error) {
     console.error("Error fetching hackathons:", error.message);
@@ -41,21 +45,26 @@ export const updateLoginStatus = async (req, res) => {
 };
 
 export async function findNearByUser(req, res) {
-  const { latitude, longitude } = req.body;
-console.log(req.body);
 
+  const userId = req.user
+  const myUser = await user.findById(userId)
+
+  const latitude = myUser.locationCoordinates.latitude
+  const longitude = myUser.locationCoordinates.longitude
   if (!latitude || !longitude) {
     return res.status(400).json({ error: "Location data required" });
   }
 
   try {
+    let arr = [];
     const users = await user.find({}); // Get all users
 
-    // Filter users based on distance
     const nearbyUsers = users.filter(user => {
-      const distance = getDistance(latitude, longitude, user.latitude, user.longitude);
-      return distance <= 50; // Only users within 50km
+      const distance = getDistance(latitude, longitude, user.locationCoordinates.latitude, user.locationCoordinates.longitude);
+
+      return distance <= 50 && user._id.toString() !== userId.toString();
     });
+
 
     res.json({ users: nearbyUsers });
   } catch (error) {
@@ -71,6 +80,7 @@ export async function userUpdate(req, res) {
 
     const userUpdate = await user.findById(userId)
 
+
     if (!userUpdate) return res.status(404).json({ message: "User Not Found" });
 
     if (req.file) {
@@ -82,12 +92,12 @@ export async function userUpdate(req, res) {
 
     if (name) userUpdate.name = name;
     if (email) userUpdate.email = email;
-    if (skills) userUpdate.skills = [...(userUpdate.skills || []), ...(Array.isArray(skills) ? skills : [skills])];
-    if (projects) userUpdate.projects = [...(userUpdate.projects || []), ...(Array.isArray(projects) ? projects : [projects])];
+    if (skills) userUpdate.skills = [...(userUpdate.skills || []), ...skills.split(" ")];
+    if (projects) userUpdate.projects = [...(userUpdate.projects || []), ...projects.split(" ")];
     if (address) userUpdate.address = address;
     if (latitude) userUpdate.locationCoordinates.latitude = latitude
     if (longitude) userUpdate.locationCoordinates.longitude = longitude
-    if (pastAttendedHackathons) userUpdate.pastAttendedHackathons = [...(userUpdate.pastAttendedHackathons || []), ...(Array.isArray(pastAttendedHackathons) ? pastAttendedHackathons : [pastAttendedHackathons])]
+    if (pastAttendedHackathons) userUpdate.pastAttendedHackathons = [...(userUpdate.pastAttendedHackathons || []), ...pastAttendedHackathons.split(" ")]
     if (mode) userUpdate.mode = mode
 
     await userUpdate.save();

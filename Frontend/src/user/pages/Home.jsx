@@ -6,18 +6,18 @@ import instance from "../../../axiosConfig";
 function Home() {
 
   const [hackathons, setHackathons] = useState([])
-  // const [userData, setUserData] = useState([])
+  const [userData, setUserData] = useState([])
 
   useEffect(() => {
-    showAdminData()
+    showUserData()
   }, [])
 
-  const showAdminData = async () => {
+  const showUserData = async () => {
     try {
       const response = await instance.get(`/user/hackathons`)
-      // console.log(response.data.user);
+      // console.log(response.data);
 
-      // setUserData(response.data.adminData);
+      setUserData(response.data.myUser);
       setHackathons(response.data.hackathons)
     } catch (error) {
       console.log(error, error.message);
@@ -31,9 +31,9 @@ function Home() {
       <div className="flex items-stretch min-h-screen w-full bg-gray-100">
         {/* Admin Profile Section */}
         <div className="w-full lg:w-1/3 bg-indigo-50 border-r border-indigo-200 flex flex-col items-center py-8 shadow-lg">
-          <div className="w-32 h-32 bg-gray-300 rounded-full mb-6 shadow-md flex items-center justify-center">
+          <div className="w-32 h-32 bg-gray-300 rounded-full mb-6 shadow-md flex items-center justify-center ">
             {/* Placeholder for Admin Photo */}
-            <img src={null} alt="" className="text-gray-500 font-semibold" />
+            <img src={userData.image} alt={userData.name} className="text-gray-500 font-semibold w-full h-full rounded-full" />
           </div>
           <Link
             className="text-white bg-indigo-500 px-8 py-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300"
