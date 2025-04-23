@@ -52,7 +52,7 @@ export async function adminLogin(req, res) {
 
 
         res.cookie("adminToken", adminToken, {
-            httpOnly: true,
+            httpOnly: false,
             secure: false,
             sameSite: "strict"
         }).send({
