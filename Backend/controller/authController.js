@@ -149,7 +149,7 @@ export async function userLogin(req, res) {
         )
 
         res.cookie("userToken", userToken, {
-            httpOnly: true,
+            httpOnly: false,
             secure: false,
             sameSite: "strict"
         }).send({
