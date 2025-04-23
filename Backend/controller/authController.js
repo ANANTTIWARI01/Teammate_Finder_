@@ -53,7 +53,7 @@ export async function adminLogin(req, res) {
 
         res.cookie("adminToken", adminToken, {
             httpOnly: true,
-            secure: true,
+            secure: false,
             sameSite: "strict"
         }).send({
             message: "Admin Logged in Successfully",
@@ -150,7 +150,7 @@ export async function userLogin(req, res) {
 
         res.cookie("userToken", userToken, {
             httpOnly: true,
-            secure: true,
+            secure: false,
             sameSite: "strict"
         }).send({
             message: "User Logged in Successfully",
