@@ -17,6 +17,8 @@ import UserAuth from "./user/context/UserAuth";
 import EditUser from "./user/pages/EditUser";
 import UserAvailable from "./user/pages/UserAvailable";
 import SingleHackathon from "./user/pages/SingleHackathon";
+import UserProfile from "./user/pages/AvaillableUserProfile";
+import UserData from "./user/context/UserData";
 
 // import ImageUpload from "./admin/pages/ImageUpload"
 
@@ -53,6 +55,13 @@ const router = createBrowserRouter([
         element:
           <UserProtectedRoute>
             <SingleHackathon />
+          </UserProtectedRoute>
+      },
+      {
+        path: ":userName",
+        element:
+          <UserProtectedRoute>
+            <UserProfile />
           </UserProtectedRoute>
       },
       {
@@ -114,8 +123,11 @@ function App() {
   return (
     <>
       <AdminAuth>
+
         <UserAuth>
+          <UserData>
           <RouterProvider router={router} />
+          </UserData>
         </UserAuth>
       </AdminAuth>
     </>

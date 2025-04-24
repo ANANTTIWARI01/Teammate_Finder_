@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import instance from "../../../axiosConfig";
-// import { useParams } from "react-router-dom";
 import axios from "axios";
 import UserAvailable from "./UserAvailable";
 import { useNavigate } from "react-router-dom";
-// import AdminHome from "./AdminHome";
+import { MdEdit } from "react-icons/md"
 import { MdAdd } from "react-icons/md";
+// import { useUserAuth } from "../context/UserAuth";
+import { useUserData } from "../context/UserData";
 
 function EditUser() {
+    const { userData } = useUserData()
+
+    const [isEdit, setIsEdit] = useState(false)
     const [formData, setFormData] = useState({
         email: "",
         address: "",
@@ -18,7 +22,6 @@ function EditUser() {
         projects: [],
         skills: [],
         pastAttendedHackathons: []
-
     });
 
     const navigate = useNavigate()
@@ -97,152 +100,157 @@ function EditUser() {
 
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-4 p-6 bg-gray-100 shadow-lg rounded-md"
-        >
-            <h2 className="text-2xl font-bold text-center mb-4">Edit User Profile</h2>
-
-            {/* Email Field */}
+        <>
             <div>
-                <label htmlFor="email" className="block mb-2 font-medium">
-                    Email
-                </label>
-                <input type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Enter email "
-                />
-            </div>
-
-            {/* Location Field */}
-            <div>
-                <label htmlFor="address" className="block mb-2 font-medium">
-                     City Name
-                </label>
-                <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Enter City Name"
-                    required
-                />
-            </div>
-
-            {/* {skills field} */}
-
-            <div>
-                <label htmlFor="skills" className="block mb-2 font-medium">
-                    Skills 
-                </label>
-                <input
-                    type="text"
-                    id="skills"
-                    name="skills"
-                    value={formData.skills}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Skills (separate each skill by comma)"
-                // required
-                />
-            </div>
-
-            {/* Mode Field */}
-            <div>
-                <label htmlFor="mode" className="block mb-2 font-medium">
-                    Mode
-                </label>
-                <select
-                    id="mode"
-                    name="mode"
-                    value={formData.mode}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-4 p-6 bg-gray-100 shadow-lg rounded-md"
                 >
-                    <option value="" disabled>
-                        Select mode
-                    </option>
-                    <option value="online">Online</option>
-                    <option value="offline">Offline</option>
-                </select>
+                    <div className="flex items-center justify-around">
+                        <h2 className="text-2xl font-bold text-center mb-4">Edit User Profile</h2>
+                        <MdEdit onClick={() => { setIsEdit(true); setFormData(userData) }} className="text-3xl" />
+                    </div>
+                    {/* Email Field */}
+                    <div>
+                        <label htmlFor="email" className="block mb-2 font-medium">
+                            Email
+                        </label>
+                        <input type="email"
+                            id="email"
+                            name="email"
+                            value={isEdit ? formData.email : userData.email}
+                            onChange={handleChange}
+                            disabled={!isEdit}
+                            className="w-full p-2 border border-gray-300 rounded"
+                            placeholder="Enter email "
+                        />
+                    </div>
+
+                    {/* Location Field */}
+                    <div>
+                        <label htmlFor="address" className="block mb-2 font-medium">
+                            City Name
+                        </label>
+                        <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            value={isEdit ? formData.address : userData.address}
+                            onChange={handleChange}
+                            disabled={!isEdit}
+                            className="w-full p-2 border border-gray-300 rounded"
+                            placeholder="Enter City Name"
+                            required
+                        />
+                    </div>
+
+                    {/* {skills field} */}
+
+                    <div>
+                        <label htmlFor="skills" className="block mb-2 font-medium">
+                            Skills
+                        </label>
+                        <input
+                            type="text"
+                            id="skills"
+                            name="skills"
+                            value={isEdit ? formData.skills : userData.skills}
+                            disabled={!isEdit}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded"
+                            placeholder="Skills (separate each by comma)"
+                        // required
+                        />
+                    </div>
+
+                    {/* Mode Field */}
+                    <div>
+                        <label htmlFor="mode" className="block mb-2 font-medium">
+                            Mode
+                        </label>
+                        <select
+                            id="mode"
+                            name="mode"
+                            value={isEdit ? formData.mode : userData.mode}
+                            onChange={handleChange}
+                            disabled={!isEdit}
+                            className="w-full p-2 border border-gray-300 rounded"
+                            required
+                        >
+                            <option value="" disabled>
+                                Select mode
+                            </option>
+                            <option value="online">Online</option>
+                            <option value="offline">Offline</option>
+                        </select>
+                    </div>
+
+
+                    {/* Projects Link Field */}
+                    <div>
+                        <label htmlFor="projects" className="block mb-2 font-medium">
+                            Projects Link
+                        </label>
+                        <input
+                            type="url"
+                            id="projects"
+                            name="projects"
+                            value={isEdit ? formData.projects : userData.projects}
+                            onChange={handleChange}
+                            disabled={!isEdit}
+                            className="w-full p-2 border border-gray-300 rounded"
+                            placeholder="Enter Projects link  (separate each by comma)"
+                            required
+                        />
+                    </div>
+
+                    {/* PastAttended Hackathon Link Field */}
+                    <div>
+                        <label htmlFor="pastAttendedHackathons" className="block mb-2 font-medium">
+                            Past Attended Hackathons Link
+                        </label>
+                        <input
+                            type="url"
+                            id="pastAttendedHackathons"
+                            name="pastAttendedHackathons"
+                            value={isEdit ? formData.pastAttendedHackathons : userData.pastAttendedHackathons}
+                            onChange={handleChange}
+                            disabled={!isEdit}
+                            className="w-full p-2 border border-gray-300 rounded"
+                            placeholder="Enter Past Attended Hackathons link  (separate each by comma)"
+                            required
+                        />
+                    </div>
+
+
+                    {/* Image Field */}
+                    <div>
+                        <label htmlFor="image" className="block mb-2 font-medium">
+                            Image Upload
+                        </label>
+                        <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            onChange={handleChange}
+                            disabled={!isEdit}
+                            className="w-full p-2 border border-gray-300 rounded"
+                            accept="image/*"
+                        />
+
+                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        className="w-full py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600"
+                        disabled={!isEdit}
+                    >
+                        Submit
+                    </button>
+                </form>
             </div>
-
-            {/* Latitude and Longitude Display */}
-            <div className="flex flex-col gap-2 p-4 bg-white rounded shadow-md border border-gray-300">
-                <p className="text-lg font-medium text-gray-800">
-                    Latitude: {formData.latitude || "Not fetched yet"}
-                </p>
-                <p className="text-lg font-medium text-gray-800">
-                    Longitude: {formData.longitude || "Not fetched yet"}
-                </p>
-            </div>
-
-            {/* Projects Link Field */}
-            <div>
-                <label htmlFor="projects" className="block mb-2 font-medium">
-                    Projects Link
-                </label>
-                <input
-                    type="url"
-                    id="projects"
-                    name="projects"
-                    value={formData.projects}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Enter Projects link  (separate each project link by comma)"
-                    required
-                />
-            </div>
-
-            {/* PastAttended Hackathon Link Field */}
-            <div>
-                <label htmlFor="pastAttendedHackathons" className="block mb-2 font-medium">
-                    Past Attended Hackathons Link
-                </label>
-                <input
-                    type="url"
-                    id="pastAttendedHackathons"
-                    name="pastAttendedHackathons"
-                    value={formData.pastAttendedHackathons}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Enter Past Attended Hackathons link (separate each hackathon link by comma)"
-                    required
-                />
-            </div>
-
-
-            {/* Image Field */}
-            <div>
-                <label htmlFor="image" className="block mb-2 font-medium">
-                    Image Upload
-                </label>
-                <input
-                    type="file"
-                    id="image"
-                    name="image"
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    accept="image/*"
-                />
-
-            </div>
-
-            {/* Submit Button */}
-            <button
-                type="submit"
-                className="w-full py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600"
-            >
-                Submit
-            </button>
-        </form>
+        </>
     );
 }
 

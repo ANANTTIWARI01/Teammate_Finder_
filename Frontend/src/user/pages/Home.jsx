@@ -1,29 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import instance from "../../../axiosConfig";
+// import instance from "../../../axiosConfig";
+import EditUser from "./EditUser";
+// import { useUserAuth } from "../context/UserAuth";
+import { useUserData } from "../context/UserData";
 
 
 function Home() {
 
-  const [hackathons, setHackathons] = useState([])
-  const [userData, setUserData] = useState([])
-
-  useEffect(() => {
-    showUserData()
-  }, [])
-
-  const showUserData = async () => {
-    try {
-      const response = await instance.get(`/user/hackathons`)
-      // console.log(response.data);
-
-      setUserData(response.data.myUser);
-      setHackathons(response.data.hackathons)
-    } catch (error) {
-      console.log(error, error.message);
-    }
-  }
-
+  const { userData, hackathons } = useUserData()
 
 
   return (
@@ -38,6 +23,7 @@ function Home() {
           <Link
             className="text-white bg-indigo-500 px-8 py-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300"
             to="/editUser"
+          // onClick={()=>setIsEdit(true)}
           >
             Edit Profile
           </Link>
@@ -62,19 +48,19 @@ function Home() {
                   className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow duration-300"
                 >
                   <Link to={`${hackathon.name}/${hackathon._id}`}>
-                  <img
-                    src={hackathon.image}
-                    alt={`Hackathon ${hackathon.name}`}
-                    className="rounded-t-lg h-40 w-full object-cover mb-4"
-                  />
-                  <h1 className="text-lg font-bold text-gray-800">
-                    {hackathon.name}
-                  </h1>
-                  <div className="flex items-center justify-around">
-                    <h3 className="text-md font-semibold text-gray-800">{hackathon.date.slice(0, 11)}</h3>
-                    <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
-                  </div>
-                  <p className="text-gray-600 mt-2">{hackathon.description}</p>
+                    <img
+                      src={hackathon.image}
+                      alt={`Hackathon ${hackathon.name}`}
+                      className="rounded-t-lg h-40 w-full object-cover mb-4"
+                    />
+                    <h1 className="text-lg font-bold text-gray-800">
+                      {hackathon.name}
+                    </h1>
+                    <div className="flex items-center justify-around">
+                      <h3 className="text-md font-semibold text-gray-800">{hackathon.date.slice(0, 11)}</h3>
+                      <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
+                    </div>
+                    <p className="text-gray-600 mt-2">{hackathon.description}</p>
                   </Link>
                 </div>
               ))}

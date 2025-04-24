@@ -32,7 +32,7 @@ function SingleHackathon() {
         <p className="mt-4 text-sm">Event Date: {hackathonData.date?.split("T")[0] || "Date"} | Mode: {hackathonData.mode || "Mode"}</p>
       </div>
 
-      {/* About Section */}
+      {/* About Section */} 
       <div className="py-10 px-6 bg-gray-100 flex flex-col md:flex-row items-center mt-8 rounded-lg shadow-md">
         <img
           src={hackathonData.image || "https://via.placeholder.com/400"}

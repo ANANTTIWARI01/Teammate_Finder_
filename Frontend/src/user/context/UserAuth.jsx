@@ -8,6 +8,7 @@ export const AuthContext = createContext({});
 function UserAuth({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  
   // const [adminId, setAdminId] = useState("")
 
   async function checkAuthentication() {
@@ -43,6 +44,8 @@ function UserAuth({ children }) {
     }
   }
 
+
+  
 
   return (
     <AuthContext.Provider
