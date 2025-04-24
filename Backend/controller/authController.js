@@ -53,8 +53,9 @@ export async function adminLogin(req, res) {
 
         res.cookie("adminToken", adminToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "none"
+            secure: true,
+            sameSite: "none",
+            maxAge: 3600000
         }).send({
             message: "Admin Logged in Successfully",
             admin: {
@@ -73,9 +74,9 @@ export async function adminLogin(req, res) {
 export async function logoutAdmin(req, res) {
     try {
         res.clearCookie("adminToken", {
-            httpOnly: false,
-            secure: false,
-            sameSite: "strict",
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
         })
         res.status(200).send({ message: "Logged out" });
     } catch (error) {
@@ -87,9 +88,10 @@ export async function logoutAdmin(req, res) {
 export async function logoutUser(req, res) {
     try {
         res.clearCookie("userToken", {
-            httpOnly: false,
-            secure: false,
-            sameSite: "strict",
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            maxAge:3600000
         })
         res.status(200).send({ message: "Logged out" });
     } catch (error) {
@@ -150,8 +152,9 @@ export async function userLogin(req, res) {
 
         res.cookie("userToken", userToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "none"
+            secure: true,
+            sameSite: "none",
+            maxAge: 3600000
         }).send({
             message: "User Logged in Successfully",
             admin: {
