@@ -13,6 +13,7 @@ function Register() {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   }
+
   async function handleSubmit(e) {
     e.preventDefault();
     try {

@@ -19,6 +19,7 @@ import UserAvailable from "./user/pages/UserAvailable";
 import SingleHackathon from "./user/pages/SingleHackathon";
 import UserProfile from "./user/pages/AvaillableUserProfile";
 import UserData from "./user/context/UserData";
+import AvaillableUserProfile from "./user/pages/AvaillableUserProfile";
 
 // import ImageUpload from "./admin/pages/ImageUpload"
 
@@ -58,10 +59,10 @@ const router = createBrowserRouter([
           </UserProtectedRoute>
       },
       {
-        path: ":userName",
+        path: ":userId",
         element:
           <UserProtectedRoute>
-            <UserProfile />
+            <AvaillableUserProfile />
           </UserProtectedRoute>
       },
       {

@@ -25,7 +25,7 @@ function UserData({ children }) {
 
   useEffect(() => {
     userNearMe()
-  }, [])
+  }, [userData])
   const [availableUser, setAvailableUser] = useState([])
   const [toggle, setToggle] = useState(false)
 
