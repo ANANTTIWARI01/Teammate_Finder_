@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import instance from "../../../axiosConfig";
-import { useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import axios from "axios";
+import { MdEdit } from "react-icons/md"
 import AdminHome from "./AdminHome";
+
 
 function EditAdminProfile() {
   const [formData, setFormData] = useState({
@@ -14,6 +16,8 @@ function EditAdminProfile() {
   });
 
   const { id } = useParams();
+      // const [isEdit, setIsEdit] = useState(false)
+  
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -86,6 +90,7 @@ function EditAdminProfile() {
       className="flex flex-col gap-4 p-6 bg-gray-100 shadow-lg rounded-md"
     >
       <h2 className="text-2xl font-bold text-center mb-4">Edit Admin Profile</h2>
+      {/* <MdEdit onClick={() => { setIsEdit(true); setFormData(data) }} className="text-3xl" /> */}
 
       {/* Location Field */}
       <div>
@@ -119,15 +124,7 @@ function EditAdminProfile() {
         />
       </div>
 
-      {/* Latitude and Longitude Display */}
-      <div className="flex flex-col gap-2 p-4 bg-white rounded shadow-md border border-gray-300">
-        <p className="text-lg font-medium text-gray-800">
-          Latitude: {formData.latitude || "Not fetched yet"}
-        </p>
-        <p className="text-lg font-medium text-gray-800">
-          Longitude: {formData.longitude || "Not fetched yet"}
-        </p>
-      </div>
+   
       {/* Image Field */}
       <div>
         <label htmlFor="image" className="block mb-2 font-medium">

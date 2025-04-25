@@ -14,7 +14,7 @@ console.log(id);
         }
 
         // getting the data of the hacakathon
-        const { name, description, mode, date } = req.body;
+        const { name, description, mode, date,registrationLink,hackathonLink } = req.body;
 
         if (!name || !description || !mode || !date) {
             return res.status(400).json({ message: "Missing required fields: name, description, mode, or date" });
@@ -38,6 +38,8 @@ console.log(id);
             mode,
             date,
             image: secure_url,
+            registrationLink,
+            hackathonLink
         };
 console.log(Admin);
 

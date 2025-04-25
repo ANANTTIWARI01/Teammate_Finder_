@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 function SingleHackathon() {
   const { id } = useParams();
   const [hackathonData, setHackathonData] = useState({});
+console.log(hackathonData);
 
   useEffect(() => {
     fetchSingleHackathon();
@@ -24,12 +25,12 @@ function SingleHackathon() {
     <div className="container mx-auto px-6 py-10">
       {/* Hero Section */}
       <div className="bg-gray-900 text-white text-center py-12 px-6 rounded-lg shadow-md">
-        <h1 className="text-5xl font-bold">{hackathonData.name || "Hackathon Name"}</h1>
-        <p className="text-lg mt-2">{hackathonData.description || "Hackathon Description"}</p>
-        <button className="mt-6 px-8 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400">
+        <h1 className="text-5xl font-bold mb-4">{hackathonData.name || "Hackathon Name"}</h1>
+        <p className="text-lg mt-2 mb-4">{hackathonData.description || "Hackathon Description"}</p>
+        <a className="mt-6 px-8 py-3 mb-4 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400" href={hackathonData.hackathonLink}>
           Register Now
-        </button>
-        <p className="mt-4 text-sm">Event Date: {hackathonData.date?.split("T")[0] || "Date"} | Mode: {hackathonData.mode || "Mode"}</p>
+        </a>
+        <p className="mt-6 text-sm">Event Date: {hackathonData.date?.split("T")[0] || "Date"} | Mode: {hackathonData.mode || "Mode"}</p>
       </div>
 
       {/* About Section */} 
@@ -97,10 +98,10 @@ function SingleHackathon() {
 
       {/* Registration Section */}
       <div className="py-10 px-6 bg-yellow-500 text-center mt-10 rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold text-gray-900">🔗 Ready to Join?</h2>
-        <button className="mt-4 px-6 py-2 bg-white text-yellow-600 font-semibold rounded-lg hover:bg-gray-200">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">🔗 Ready to Join?</h2>
+        <a className="mt-4 px-6 py-2 bg-white text-yellow-600 font-semibold rounded-lg hover:bg-gray-200" href={hackathonData.registrationLink}>
           Register Now
-        </button>
+        </a>
       </div>
     </div>
   );

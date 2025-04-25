@@ -3,16 +3,17 @@ import { Link, useParams } from "react-router-dom";
 // import { useAdminAuth } from "../context/AdminAuth";
 import instance from "../../../axiosConfig";
 import EditHackathon from "./EditHackathon";
+import { useAdminAuth } from "../context/AdminAuth";
 
 function AdminHome() {
   const { id } = useParams();
   const [hackathonId, setHackathonId] = useState("")
   const [hackathons, setHackathons] = useState([])
   const [adminData, setAdminData] = useState([])
-
+const {isAuthenticated} =  useAdminAuth()
   useEffect(() => {
     showAdminData()
-  }, [])
+  }, [isAuthenticated])
                                                         
   const showAdminData = async () => {                    
     try {
