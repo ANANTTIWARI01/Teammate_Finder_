@@ -1,25 +1,21 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import instance from "../../../axiosConfig";
+// import instance from "../../../axiosConfig";
 import { Link } from "react-router-dom";
+import { useUserData } from "../context/UserData";
+import { useEffect, useState } from "react";
 
 function SingleHackathon() {
   const { id } = useParams();
-  const [hackathonData, setHackathonData] = useState({});
-console.log(hackathonData);
+  const { hackathons } = useUserData()
+  const [hackathonData, setHackathonData] = useState({})
 
   useEffect(() => {
-    fetchSingleHackathon();
-  }, []);
-
-  async function fetchSingleHackathon() {
-    try {
-      const response = await instance.get(`/user/${id}`);
-      setHackathonData(response.data.singleHackathon);
-    } catch (error) {
-      console.error("Error fetching hackathon data:", error);
+    if (hackathons && hackathons.length > 0) {
+      setHackathonData(hackathons.find(obj => id === obj._id) || {});
     }
-  }
+  }, [hackathons, id]);
+
 
   return (
     <div className="container mx-auto px-6 py-10">
@@ -33,7 +29,7 @@ console.log(hackathonData);
         <p className="mt-6 text-sm">Event Date: {hackathonData.date?.split("T")[0] || "Date"} | Mode: {hackathonData.mode || "Mode"}</p>
       </div>
 
-      {/* About Section */} 
+      {/* About Section */}
       <div className="py-10 px-6 bg-gray-100 flex flex-col md:flex-row items-center mt-8 rounded-lg shadow-md">
         <img
           src={hackathonData.image || "https://via.placeholder.com/400"}

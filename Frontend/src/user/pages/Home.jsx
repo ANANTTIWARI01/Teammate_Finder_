@@ -1,15 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import EditUser from "./EditUser";
-
 import { useUserData } from "../context/UserData";
-
 
 function Home() {
 
   const { userData, hackathons } = useUserData()
-
 
   return (
     <>
