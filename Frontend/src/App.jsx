@@ -17,6 +17,7 @@ import UserAuth from "./user/context/UserAuth";
 import EditUser from "./user/pages/EditUser";
 import UserAvailable from "./user/pages/UserAvailable";
 import SingleHackathon from "./user/pages/SingleHackathon";
+import AdminSingleHackathon from "./admin/pages/AdminSingleHackathon";
 import UserProfile from "./user/pages/AvaillableUserProfile";
 import UserData from "./user/context/UserData";
 
@@ -109,9 +110,17 @@ const router = createBrowserRouter([
       },
       {
         path: ":id/editHackathon",
-        element: <AdminProtectedRoute>
+        element:
+         <AdminProtectedRoute>
           <EditHackathon />
         </AdminProtectedRoute>
+      },
+      {
+        path:":id/adminSingleHackathon",
+        element:
+<AdminProtectedRoute>
+  <AdminSingleHackathon/>
+</AdminProtectedRoute>
       }
     ]
   }

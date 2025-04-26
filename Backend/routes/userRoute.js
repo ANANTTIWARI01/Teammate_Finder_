@@ -9,6 +9,5 @@ router.get("/hackathons",checkUser,fetchAllHackathons)
 router.post("/update-login-status", updateLoginStatus);
 router.get("/nearby-users",checkUser,findNearByUser)
 router.put("/userPanelUpdate",checkUser, upload.single("image"),userUpdate)
-router.get("/:hackathonId",fetchHackathon)
 export default router;
 

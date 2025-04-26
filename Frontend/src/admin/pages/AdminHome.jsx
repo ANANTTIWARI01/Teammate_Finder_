@@ -79,6 +79,7 @@ function AdminHome() {
                   key={index}
                   className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow duration-300"
                 >
+                  <Link to={`/admin/${hackathon._id}/adminSingleHackathon` } state={{hackathons}}>
                   <img
                     src={hackathon.image}
                     alt={`Hackathon ${hackathon.name}`}
@@ -97,6 +98,7 @@ function AdminHome() {
                     <Link className="text-white bg-green-500 px-5 py-2 rounded-lg hover:bg-green-600 shadow-md transition duration-300" to={`/admin/${hackathon._id}/editHackathon`} state={{hackathons}} >Edit</Link>
 
                   </div>
+                  </Link>
                 </div>
               ))}
             </div>
