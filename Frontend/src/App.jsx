@@ -101,7 +101,7 @@ const router = createBrowserRouter([
           </AdminProtectedRoute>
       },
       {
-        path: ":id/editAdminProfile",
+        path: "editAdminProfile",
         element:
           <AdminProtectedRoute>
             <EditAdminProfile />

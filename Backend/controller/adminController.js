@@ -121,6 +121,8 @@ export async function updateHackathon(req, res) {
 
 export async function adminUpdate(req, res) {
     try {
+        console.log(req.body);
+        
         const adminId = req.admin
         const { name, email, organizationName, locationName, description, latitude, longitude } = req.body
 

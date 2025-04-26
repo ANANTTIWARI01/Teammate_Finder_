@@ -11,6 +11,10 @@ import { useUserData } from "../context/UserData";
 function EditUser() {
     const { userData } = useUserData()
 
+    useEffect(() => {
+        setFormData(userData); 
+    }, []); 
+    
     const [isEdit, setIsEdit] = useState(false)
     const [formData, setFormData] = useState({
         email: "",
@@ -108,7 +112,7 @@ function EditUser() {
                 >
                     <div className="flex items-center justify-around">
                         <h2 className="text-2xl font-bold text-center mb-4">Edit User Profile</h2>
-                        <MdEdit onClick={() => { setIsEdit(true); setFormData(userData) }} className="text-3xl" />
+                        <MdEdit onClick={() => { setIsEdit(true); }} className="text-3xl" />
                     </div>
                     {/* Email Field */}
                     <div>

@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-// import { useAdminAuth } from "../context/AdminAuth";
+import { Link } from "react-router-dom";
 import instance from "../../../axiosConfig";
-import EditHackathon from "./EditHackathon";
 import { useAdminAuth } from "../context/AdminAuth";
+import EditAdminProfile from "./EditAdminProfile";
 
 function AdminHome() {
-  const { id } = useParams();
+
   const [hackathonId, setHackathonId] = useState("")
   const [hackathons, setHackathons] = useState([])
   const [adminData, setAdminData] = useState([])
-const {isAuthenticated} =  useAdminAuth()
+  const { isAuthenticated } = useAdminAuth()
+
+
   useEffect(() => {
-    showAdminData()
+    if (isAuthenticated) { showAdminData() }
   }, [isAuthenticated])
-                                                        
-  const showAdminData = async () => {                    
+
+  const showAdminData = async () => {
     try {
-      const response = await instance.get(`/admin/${id}`)
-      console.log(response);
-      
+      const response = await instance.get(`/admin/adminData`)
       setAdminData(response.data.adminData);
       setHackathons(response.data.adminData.Hackathon)
     } catch (error) {
@@ -33,7 +32,7 @@ const {isAuthenticated} =  useAdminAuth()
 
   const deletingHackathon = async () => {
     try {
-      await instance.delete(`/admin/${id}/deletehackathon/${hackathonId}`);
+      await instance.delete(`/admin/${hackathonId}/deletehackathon`);
 
       setHackathons((prev) => prev.filter(hackathon => hackathon._id !== hackathonId));
 
@@ -41,7 +40,6 @@ const {isAuthenticated} =  useAdminAuth()
       console.log(error, error.message);
     }
   };
-
 
   return (
     <>
@@ -54,7 +52,8 @@ const {isAuthenticated} =  useAdminAuth()
           </div>
           <Link
             className="text-white bg-indigo-500 px-8 py-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300"
-            to={`/admin/${id}/editAdminProfile`}
+            to={`/admin/editAdminProfile`}
+            state={{ adminData }}
           >
             Edit Profile
           </Link>
@@ -95,7 +94,7 @@ const {isAuthenticated} =  useAdminAuth()
                   <p className="text-gray-600 mt-2">{hackathon.description}</p>
                   <div className="flex items-center justify-around">
                     <button className="text-white bg-indigo-500 px-5 py-2 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300" onClick={() => setHackathonId(hackathon._id)} >Delete</button>
-                    <Link className="text-white bg-green-500 px-5 py-2 rounded-lg hover:bg-green-600 shadow-md transition duration-300" to={`/admin/${hackathon._id}/editHackathon`} >Edit</Link>
+                    <Link className="text-white bg-green-500 px-5 py-2 rounded-lg hover:bg-green-600 shadow-md transition duration-300" to={`/admin/${hackathon._id}/editHackathon`} state={{hackathons}} >Edit</Link>
 
                   </div>
                 </div>

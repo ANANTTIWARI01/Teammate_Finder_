@@ -5,11 +5,11 @@ import checkAdmin from "../middleware/authCheckMiddleware.js"
 const router = express.Router()
 
 router.post("/addHackathon", upload.single("image"), checkAdmin, addHackathon)
-router.delete("/:adminId/deleteHackathon/:hackathonId", checkAdmin, deleteHackathon)
+router.delete("/:hackathonId/deleteHackathon", checkAdmin, deleteHackathon)
 router.put("/:hackathonId/updateHackathon", upload.single("image"), checkAdmin, updateHackathon)
-router.put("/:adminId/updateAdminPanel", upload.single("image"), checkAdmin, adminUpdate)
+router.put("/updateAdminPanel", upload.single("image"), checkAdmin, adminUpdate)
 // router.get("/:adminId/hackathons", checkAdmin, showHackathon)
-router.get("/:adminId", checkAdmin, showAdminData)
+router.get("/adminData", checkAdmin, showAdminData)
 
 export default router
 

@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from "react";
 import instance from "../../../axiosConfig";
-import {  useParams } from "react-router-dom";
 import axios from "axios";
 import { MdEdit } from "react-icons/md"
 import AdminHome from "./AdminHome";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 function EditAdminProfile() {
-  const [formData, setFormData] = useState({
+  const { state } = useLocation()
+  const adminData = state?.adminData
+  const [isEdit, setIsEdit] = useState(false)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (adminData) {
+      setFormData(adminData)
+    }
+  }, [])
+
+
+  const [formData, setFormData] = useState(adminData || {
     organizationName: "",
     locationName: "",
     latitude: "",
@@ -15,9 +27,7 @@ function EditAdminProfile() {
     image: null,
   });
 
-  const { id } = useParams();
-      // const [isEdit, setIsEdit] = useState(false)
-  
+
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -72,12 +82,14 @@ function EditAdminProfile() {
         data.append("image", formData.image);
       }
 
-      await instance.put(`/admin/${id}/updateAdminPanel`, data, {
+      await instance.put(`/admin/updateAdminPanel`, data, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+
+navigate("/admin/home")
       console.log("Profile updated successfully!");
     } catch (error) {
       console.log("Error updating profile:", error.message);
@@ -90,7 +102,7 @@ function EditAdminProfile() {
       className="flex flex-col gap-4 p-6 bg-gray-100 shadow-lg rounded-md"
     >
       <h2 className="text-2xl font-bold text-center mb-4">Edit Admin Profile</h2>
-      {/* <MdEdit onClick={() => { setIsEdit(true); setFormData(data) }} className="text-3xl" /> */}
+      <MdEdit onClick={() => { setIsEdit(true)}} className="text-3xl" />
 
       {/* Location Field */}
       <div>
@@ -103,6 +115,7 @@ function EditAdminProfile() {
           name="locationName"
           value={formData.locationName}
           onChange={handleChange}
+          disabled={!isEdit}
           className="w-full p-2 border border-gray-300 rounded"
           placeholder="Enter Location Name"
           required
@@ -119,12 +132,13 @@ function EditAdminProfile() {
           name="organizationName"
           value={formData.organizationName}
           onChange={handleChange}
+          disabled={!isEdit}
           className="w-full p-2 border border-gray-300 rounded"
           placeholder="Enter Organization Name"
         />
       </div>
 
-   
+
       {/* Image Field */}
       <div>
         <label htmlFor="image" className="block mb-2 font-medium">
@@ -135,15 +149,17 @@ function EditAdminProfile() {
           id="image"
           name="image"
           onChange={handleChange}
+          disabled={!isEdit}
           className="w-full p-2 border border-gray-300 rounded"
           accept="image/*"
         />
-        
+
       </div>
 
       {/* Submit Button */}
       <button
         type="submit"
+        disabled={!isEdit}
         className="w-full py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600"
       >
         Submit
@@ -153,3 +169,12 @@ function EditAdminProfile() {
 }
 
 export default EditAdminProfile;
+
+/*line -105
+ * Mistake: I was using local state to pass admin data between pages, which fails
+ * because state is lost when the component unmounts during navigation.
+ *
+ * Correct: Data should be passed via React Router's Link "state" prop and then
+ * accessed in the target component using useLocation. This ensures the data persists
+ * across page transitions.
+ */

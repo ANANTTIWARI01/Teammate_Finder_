@@ -1,34 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import instance from "../../../axiosConfig";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { MdEdit } from "react-icons/md"
 
 function EditHackathon() {
+  const [isEdit, setIsEdit] = useState(false)
+  const { id } = useParams()
+  const { state } = useLocation()
+  const hackathons = state?.hackathons
 
-  const {id} = useParams()
-  const [formData, setFormData] = useState({
+  const hackathonData = hackathons.find((obj) => (id === obj._id))
+
+  useEffect(() => {
+    if (hackathonData) {
+      setFormData(hackathonData)
+    }
+  }, [])
+
+  const [formData, setFormData] = useState(hackathonData || {
     name: "",
     mode: "",
     description: "",
     date: "",
     registrationLink: "",
     hackathonLink: "",
-    image: null, 
+    image: null,
   });
 
-  // const { id } = useParams();
-const navigate = useNavigate()
+
+  const navigate = useNavigate()
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
     setFormData((prevState) => ({
       ...prevState,
-      [name]: files ? files[0] : value, 
+      [name]: files ? files[0] : value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("Form Data Submitted: ", formData);
 
     try {
       const data = new FormData();
@@ -42,10 +53,10 @@ const navigate = useNavigate()
         data.append("image", formData.image);
       }
 
-       await instance.put(`/admin/${id}/updateHackathon`, data, {
+      await instance.put(`/admin/${id}/updateHackathon`, data, {
         withCredentials: true,
         headers: {
-          "Content-Type": "multipart/form-data", 
+          "Content-Type": "multipart/form-data",
         },
       });
       navigate("/admin/home")
@@ -60,6 +71,7 @@ const navigate = useNavigate()
       className="flex flex-col gap-4 p-6 bg-gray-100 shadow-lg rounded-md"
     >
       <h2 className="text-2xl font-bold text-center mb-4">Update Hackathon Form</h2>
+      <MdEdit onClick={() => { setIsEdit(true) }} className="text-3xl" />
 
       {/* Name Field */}
       <div>
@@ -72,9 +84,10 @@ const navigate = useNavigate()
           name="name"
           value={formData.name}
           onChange={handleChange}
+          disabled={!isEdit}
           className="w-full p-2 border border-gray-300 rounded"
           placeholder="Enter hackathon name"
-          // required
+        // required
         />
       </div>
 
@@ -88,8 +101,9 @@ const navigate = useNavigate()
           name="mode"
           value={formData.mode}
           onChange={handleChange}
+          disabled={!isEdit}
           className="w-full p-2 border border-gray-300 rounded"
-          // required
+        // required
         >
           <option value="" disabled>
             Select mode
@@ -109,6 +123,7 @@ const navigate = useNavigate()
           name="description"
           value={formData.description}
           onChange={handleChange}
+          disabled={!isEdit}
           className="w-full p-2 border border-gray-300 rounded"
           placeholder="Enter description"
         />
@@ -124,9 +139,10 @@ const navigate = useNavigate()
           id="date"
           name="date"
           value={formData.date}
+          disabled={!isEdit}
           onChange={handleChange}
           className="w-full p-2 border border-gray-300 rounded"
-          // required
+        // required
         />
       </div>
 
@@ -141,9 +157,10 @@ const navigate = useNavigate()
           name="registrationLink"
           value={formData.registrationLink}
           onChange={handleChange}
+          disabled={!isEdit}
           className="w-full p-2 border border-gray-300 rounded"
           placeholder="Enter registration link"
-          // required
+        // required
         />
       </div>
 
@@ -158,6 +175,7 @@ const navigate = useNavigate()
           name="hackathonLink"
           value={formData.hackathonLink}
           onChange={handleChange}
+          disabled={!isEdit}
           className="w-full p-2 border border-gray-300 rounded"
           placeholder="Enter hackathon link (optional)"
         />
@@ -172,7 +190,8 @@ const navigate = useNavigate()
           type="file"
           id="image"
           name="image"
-          onChange={handleChange} 
+          disabled={!isEdit}
+          onChange={handleChange}
           className="w-full p-2 border border-gray-300 rounded"
           accept="image/*"
         />
@@ -181,6 +200,7 @@ const navigate = useNavigate()
       {/* Submit Button */}
       <button
         type="submit"
+        disabled={!isEdit}
         className="w-full py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600"
       >
         Submit

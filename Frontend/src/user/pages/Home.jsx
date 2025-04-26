@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import instance from "../../../axiosConfig";
+
 import EditUser from "./EditUser";
-// import { useUserAuth } from "../context/UserAuth";
+
 import { useUserData } from "../context/UserData";
 
 
@@ -23,7 +23,6 @@ function Home() {
           <Link
             className="text-white bg-indigo-500 px-8 py-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300"
             to="/editUser"
-          // onClick={()=>setIsEdit(true)}
           >
             Edit Profile
           </Link>
