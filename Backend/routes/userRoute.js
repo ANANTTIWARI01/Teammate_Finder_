@@ -1,5 +1,5 @@
 import express from "express"
- import {fetchAllHackathons,updateLoginStatus,findNearByUser,userUpdate,fetchHackathon} from "../controller/userController.js"
+ import {fetchAllHackathons,updateLoginStatus,findNearByUser,userUpdate} from "../controller/userController.js"
  import checkUser from "../middleware/UserCheckMiddleware.js"
 import upload from "../middleware/multerMiddleware.js"
  
