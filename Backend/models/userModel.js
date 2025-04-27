@@ -36,7 +36,7 @@ const userSchema = new Schema({
     pastAttendedHackathons: {
         type: [String]
     },
-    teammates: [{
+    friends: [{
         type: mongoose.Types.ObjectId,
         ref: "user"
     }],

@@ -8,7 +8,6 @@ export const AuthContext = createContext({});
 function AdminAuth({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  // const [adminId, setAdminId] = useState("")
 
   async function checkAuthentication() {
     try {
