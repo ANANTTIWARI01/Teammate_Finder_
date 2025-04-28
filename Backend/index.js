@@ -6,13 +6,13 @@ import cors from "cors";
 import { connectDB } from "./connection/db.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/userRoute.js";
-import { createServer } from "http";
-import { Server } from "socket.io";
-import { setupSocket } from "./socket.js";
+// import { createServer } from "http";
+// import { Server } from "socket.io";
+// import { setupSocket } from "./socket.js";
 
 const PORT = process.env.PORT;
 const app = express();
-const server = createServer(app);
+// const server = createServer(app);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -32,7 +32,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 
-const io = new Server(server, { cors: { origin: "*" } });
-setupSocket(io);
+// const io = new Server(server, { cors: { origin: "*" } });
+// setupSocket(io);
 
-server.listen(PORT, () => console.log(`Server running on ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));

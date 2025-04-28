@@ -27,6 +27,10 @@ function Home() {
           >
             Available User
           </Link>
+          <Link  className="text-white bg-indigo-500 px-8 py-3 my-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300"
+            to="/friends">
+              Friends
+          </Link>
         </div>
 
         {/* Main Content Section */}

@@ -19,8 +19,9 @@ function UserLogin() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await instance.post("/auth/user/login", form, { withCredentials: true });
+       await instance.post("/auth/user/login", form, { withCredentials: true });
       setIsAuthenticated(true);
+
       navigate(`/`);
     } catch (error) {
       console.log("Login error:", error);

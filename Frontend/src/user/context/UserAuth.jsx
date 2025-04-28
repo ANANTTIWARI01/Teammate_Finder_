@@ -35,6 +35,8 @@ function UserAuth({ children }) {
         {},
         {
           withCredentials: true,
+        },{
+          userId
         }
       );
       setIsAuthenticated(false);

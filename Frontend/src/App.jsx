@@ -20,6 +20,7 @@ import SingleHackathon from "./user/pages/SingleHackathon";
 import AdminSingleHackathon from "./admin/pages/AdminSingleHackathon";
 import UserProfile from "./user/pages/AvaillableUserProfile";
 import UserData from "./user/context/UserData";
+import Friends from "./user/pages/Friends";
 
 // import ImageUpload from "./admin/pages/ImageUpload"
 
@@ -111,16 +112,24 @@ const router = createBrowserRouter([
       {
         path: ":id/editHackathon",
         element:
-         <AdminProtectedRoute>
-          <EditHackathon />
-        </AdminProtectedRoute>
+          <AdminProtectedRoute>
+            <EditHackathon />
+          </AdminProtectedRoute>
       },
       {
-        path:":id/adminSingleHackathon",
+        path: ":id/adminSingleHackathon",
         element:
-<AdminProtectedRoute>
-  <AdminSingleHackathon/>
-</AdminProtectedRoute>
+          <AdminProtectedRoute>
+            <AdminSingleHackathon />
+          </AdminProtectedRoute>
+      },
+      {
+        path: "friends",
+        element:
+          <AdminProtectedRoute>
+            <Friends />
+          </AdminProtectedRoute>
+
       }
     ]
   }
@@ -135,7 +144,7 @@ function App() {
 
         <UserAuth>
           <UserData>
-          <RouterProvider router={router} />
+            <RouterProvider router={router} />
           </UserData>
         </UserAuth>
       </AdminAuth>

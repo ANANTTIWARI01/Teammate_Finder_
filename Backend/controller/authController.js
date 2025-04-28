@@ -87,12 +87,15 @@ export async function logoutAdmin(req, res) {
 
 export async function logoutUser(req, res) {
     try {
+        const { userId } = req.body
+
         res.clearCookie("userToken", {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            maxAge:3600000
+            maxAge: 3600000
         })
+        await user.findByIdAndUpdate(userId, { isLoggedIn: false })
         res.status(200).send({ message: "Logged out" });
     } catch (error) {
         console.log(error);
@@ -141,7 +144,7 @@ export async function userLogin(req, res) {
 
         if (!isPasswordValid) return res.status(401).json({ message: "Invalid Credentials" });
 
-
+        await user.findByIdAndUpdate(User._id, { isLoggedIn: true })
         const userToken = jwt.sign(
             {
                 id: User._id,
@@ -150,6 +153,8 @@ export async function userLogin(req, res) {
             { expiresIn: "1h" }
         )
 
+
+
         res.cookie("userToken", userToken, {
             httpOnly: true,
             secure: true,
@@ -157,7 +162,7 @@ export async function userLogin(req, res) {
             maxAge: 3600000
         }).send({
             message: "User Logged in Successfully",
-            admin: {
+            user: {
                 id: User._id,
                 email: User.email
             }
