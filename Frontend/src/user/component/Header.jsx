@@ -1,5 +1,5 @@
-// import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../context/UserAuth";
 
 function Header() {
@@ -22,14 +22,7 @@ function Header() {
           Logout
         </button>
       ) : (
-        <li className="list-none">
-          <Link
-            to="/user/login"
-            className="text-white hover:text-gray-200 font-semibold"
-          >
-            Login
-          </Link>
-        </li>
+        <li className="list-none"></li>
       )}
     </header>
   );

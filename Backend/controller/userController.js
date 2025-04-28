@@ -1,6 +1,5 @@
 import uploadToCloudinary from "../middleware/cloudinaryMiddleware.js";
 import admin from "../models/adminModel.js"
-// import user from "../models/userModel.js";
 import user from "../models/userModel.js"
 import { getDistance } from "../utils/DistanceCalculator.js";
 
@@ -27,22 +26,6 @@ export async function fetchAllHackathons(req, res) {
     });
   }
 }
-
-// export const updateLoginStatus = async (req, res) => {
-//   const { isLoggedIn } = req.body;
-//   const id = req.user
-//   try {
-//     const User = await user.findByIdAndUpdate(id, { isLoggedIn }, { new: true });
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
-
-//     res.json({ message: `user ${isLoggedIn ? "logged in" : "logged out"}`, User });
-//   } catch (error) {
-//     console.error("Error updating login status:", error);
-//     res.status(500).json({ error: "Server error" });
-//   }
-// };
 
 export async function findNearByUser(req, res) {
 
@@ -94,11 +77,11 @@ export async function userUpdate(req, res) {
     if (name) userUpdate.name = name;
     if (email) userUpdate.email = email;
     if (skills && skills.trim()) {
-      userUpdate.skills = [...skills.split(",")]; 
+      userUpdate.skills = [...skills.split(",")];
     }
 
     if (projects && projects.trim()) {
-      userUpdate.projects = [ ...projects.split(",")];
+      userUpdate.projects = [...projects.split(",")];
     }
 
     if (address) userUpdate.address = address;
@@ -106,7 +89,7 @@ export async function userUpdate(req, res) {
     if (longitude) userUpdate.locationCoordinates.longitude = longitude
 
     if (pastAttendedHackathons && pastAttendedHackathons.trim()) {
-      userUpdate.pastAttendedHackathons = [ ...pastAttendedHackathons.split(",")];
+      userUpdate.pastAttendedHackathons = [...pastAttendedHackathons.split(",")];
     }
     if (mode) userUpdate.mode = mode
 

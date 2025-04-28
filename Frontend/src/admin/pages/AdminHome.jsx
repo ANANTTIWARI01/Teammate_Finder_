@@ -92,7 +92,7 @@ function AdminHome() {
                     <h3 className="text-md font-semibold text-gray-800">{hackathon.date.slice(0, 11)}</h3>
                     <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
                   </div>
-                  <p className="text-gray-600 mt-2">{hackathon.description}</p>
+                  <p className="text-gray-600 mt-2">{hackathon.description.split(" ").slice(0,10).join(" ")}...</p>
                   <div className="flex items-center justify-around">
                     <button className="text-white bg-indigo-500 px-5 py-2 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300" onClick={() => setHackathonId(hackathon._id)} >Delete</button>
                     <Link className="text-white bg-green-500 px-5 py-2 rounded-lg hover:bg-green-600 shadow-md transition duration-300" to={`/admin/${hackathon._id}/editHackathon`} state={{hackathons}} >Edit</Link>

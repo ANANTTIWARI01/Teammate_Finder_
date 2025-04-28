@@ -26,7 +26,7 @@ function SingleHackathon() {
         <a className="mt-6 px-8 py-3 mb-4 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400" href={hackathonData.hackathonLink}>
           Register Now
         </a>
-        <p className="mt-6 text-sm">Event Date: {hackathonData.date?.split("T")[0] || "Date"} | Mode: {hackathonData.mode || "Mode"}</p>
+        <p className="mt-6 text-lg">Event Date: {hackathonData.date?.split("T")[0] || "Date"} | Mode: {hackathonData.mode || "Mode"}</p>
       </div>
 
       {/* About Section */}

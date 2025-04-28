@@ -4,7 +4,6 @@ import axios from "axios";
 import UserAvailable from "./UserAvailable";
 import { useNavigate } from "react-router-dom";
 import { MdEdit } from "react-icons/md"
-import { MdAdd } from "react-icons/md";
 import { useUserData } from "../context/UserData";
 
 function EditUser() {
@@ -167,7 +166,7 @@ function EditUser() {
                             onChange={handleChange}
                             className="w-full p-2 border border-gray-300 rounded"
                             placeholder="Skills (separate each by comma)"
-                        // required
+                            required
                         />
                     </div>
 
