@@ -58,7 +58,7 @@ function Home() {
                       <h3 className="text-md font-semibold text-gray-800">{hackathon.date.slice(0, 11)}</h3>
                       <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
                     </div>
-                    <p className="text-gray-600 mt-2">{hackathon.description}</p>
+                    <p className="text-gray-600 mt-2">{hackathon.description.split(" ").slice(0,10).join(" ")}...</p>
                   </Link>
                 </div>
               ))}

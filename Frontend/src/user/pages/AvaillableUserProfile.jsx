@@ -54,7 +54,7 @@ function AvaillableUserProfile() {
             {user.pastAttendedHackathons.length > 0 ? (
               <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
                 {user.pastAttendedHackathons.map((hackathon, index) => (
-                  <li key={index} className="text-lg">{hackathon}</li>
+                  <a key={index} href={hackathon} className="text-lg block">{hackathon}</a>
                 ))}
               </ul>
             ) : (
@@ -68,7 +68,7 @@ function AvaillableUserProfile() {
             {user.projects.length > 0 ? (
               <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
                 {user.projects.map((project, index) => (
-                  <li key={index} className="text-lg">{project}</li>
+                  <a key={index} href={project} className="text-lg block">{project}</a>
                 ))}
               </ul>
             ) : (
@@ -80,9 +80,9 @@ function AvaillableUserProfile() {
           <div className="p-6 bg-gray-200 rounded-lg">
             <h3 className="text-2xl font-semibold text-gray-900">🎯 Skills</h3>
             {user.skills?.length > 0 ? (
-              <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
+              <ul className="list-disc list-inside text-gray-700 mt-2 flex flex-wrap justify-center gap-4">
                 {user.skills.map((skill, index) => (
-                  <li key={index} className="text-lg">{skill}</li>
+                  <h2 key={index} className="text-lg w-[calc(100%/5)] text-center">{skill}</h2>
                 ))}
               </ul>
             ) : (
@@ -96,3 +96,5 @@ function AvaillableUserProfile() {
 }
 
 export default AvaillableUserProfile;
+
+

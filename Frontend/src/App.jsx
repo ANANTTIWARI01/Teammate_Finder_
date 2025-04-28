@@ -60,7 +60,7 @@ const router = createBrowserRouter([
           </UserProtectedRoute>
       },
       {
-        path: ":userName",
+        path: ":userId/userProfile",
         element:
           <UserProtectedRoute>
             <UserProfile />

@@ -8,8 +8,7 @@ export const AuthContext = createContext({});
 function UserAuth({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  
-  // const [adminId, setAdminId] = useState("")
+
 
   async function checkAuthentication() {
     try {
@@ -27,7 +26,7 @@ function UserAuth({ children }) {
   useEffect(() => {
     checkAuthentication();
   }, []);
-  
+
   async function UserLogoutHandle() {
     try {
       await instance.post(
@@ -35,8 +34,6 @@ function UserAuth({ children }) {
         {},
         {
           withCredentials: true,
-        },{
-          userId
         }
       );
       setIsAuthenticated(false);
@@ -47,12 +44,10 @@ function UserAuth({ children }) {
   }
 
 
-  
-
   return (
     <AuthContext.Provider
       value={{ loading, isAuthenticated, setIsAuthenticated, UserLogoutHandle }}
-      >
+    >
       {children}
     </AuthContext.Provider>
   );

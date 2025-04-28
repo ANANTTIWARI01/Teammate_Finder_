@@ -71,6 +71,7 @@ export async function adminLogin(req, res) {
     }
 }
 
+
 export async function logoutAdmin(req, res) {
     try {
         res.clearCookie("adminToken", {
@@ -85,16 +86,12 @@ export async function logoutAdmin(req, res) {
     }
 }
 
+
 export async function logoutUser(req, res) {
     try {
-        const { userId } = req.body
-
-        res.clearCookie("userToken", {
-            httpOnly: true,
-            secure: true,
-            sameSite: "none",
-            maxAge: 3600000
-        })
+        const userId = req.user
+    
+        res.clearCookie("userToken")
         await user.findByIdAndUpdate(userId, { isLoggedIn: false })
         res.status(200).send({ message: "Logged out" });
     } catch (error) {
@@ -102,7 +99,6 @@ export async function logoutUser(req, res) {
         return res.status(500).send({ mesage: error.message })
     }
 }
-
 
 
 export async function userRegister(req, res) {

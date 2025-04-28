@@ -5,16 +5,17 @@ import UserAvailable from "./UserAvailable";
 import { useNavigate } from "react-router-dom";
 import { MdEdit } from "react-icons/md"
 import { MdAdd } from "react-icons/md";
-// import { useUserAuth } from "../context/UserAuth";
 import { useUserData } from "../context/UserData";
 
 function EditUser() {
-    const { userData } = useUserData()
-
+    const { userData, showUserData } = useUserData()
     useEffect(() => {
-        setFormData(userData); 
-    }, []); 
-    
+        if (userData) {
+            setFormData(userData);
+        }
+    }, [userData]);
+
+
     const [isEdit, setIsEdit] = useState(false)
     const [formData, setFormData] = useState({
         email: "",
@@ -41,7 +42,7 @@ function EditUser() {
 
     useEffect(() => {
         async function fetchCoordinates() {
-            if (formData.address.trim() !== "") {
+            if (formData.address !== "") {
                 try {
                     const apiKey = "a3ff0ea5e54fa5a846957f72620b0699";
                     const url = `https://api.openweathermap.org/geo/1.0/direct?q=${formData.address}&limit=1&appid=${apiKey}`;
@@ -64,8 +65,8 @@ function EditUser() {
                 }
             }
         }
+        fetchCoordinates()
 
-        fetchCoordinates();
     }, [formData.address]);
 
     const handleSubmit = async (e) => {
@@ -93,14 +94,17 @@ function EditUser() {
                     "Content-Type": "multipart/form-data",
                 },
             });
+
             console.log("Profile updated successfully!");
+            await showUserData();
+            //so why i call this function here because , when ever i update the userProfile , i directed to home page , 
+            // then when i come again to this page the data do not get update , so for updating the data whenever i update the user Profile instantly 
+            // i call this function here/\. 
             navigate("/")
         } catch (error) {
             console.log("Error updating profile:", error.message);
         }
     };
-
-
 
 
     return (
@@ -122,7 +126,7 @@ function EditUser() {
                         <input type="email"
                             id="email"
                             name="email"
-                            value={isEdit ? formData.email : userData.email}
+                            value={formData.email}
                             onChange={handleChange}
                             disabled={!isEdit}
                             className="w-full p-2 border border-gray-300 rounded"
@@ -139,7 +143,7 @@ function EditUser() {
                             type="text"
                             id="address"
                             name="address"
-                            value={isEdit ? formData.address : userData.address}
+                            value={formData.address}
                             onChange={handleChange}
                             disabled={!isEdit}
                             className="w-full p-2 border border-gray-300 rounded"
@@ -158,7 +162,7 @@ function EditUser() {
                             type="text"
                             id="skills"
                             name="skills"
-                            value={isEdit ? formData.skills : userData.skills}
+                            value={formData.skills}
                             disabled={!isEdit}
                             onChange={handleChange}
                             className="w-full p-2 border border-gray-300 rounded"
@@ -175,7 +179,7 @@ function EditUser() {
                         <select
                             id="mode"
                             name="mode"
-                            value={isEdit ? formData.mode : userData.mode}
+                            value={formData.mode}
                             onChange={handleChange}
                             disabled={!isEdit}
                             className="w-full p-2 border border-gray-300 rounded"
@@ -199,7 +203,7 @@ function EditUser() {
                             type="url"
                             id="projects"
                             name="projects"
-                            value={isEdit ? formData.projects : userData.projects}
+                            value={formData.projects}
                             onChange={handleChange}
                             disabled={!isEdit}
                             className="w-full p-2 border border-gray-300 rounded"
@@ -217,7 +221,7 @@ function EditUser() {
                             type="url"
                             id="pastAttendedHackathons"
                             name="pastAttendedHackathons"
-                            value={isEdit ? formData.pastAttendedHackathons : userData.pastAttendedHackathons}
+                            value={formData.pastAttendedHackathons}
                             onChange={handleChange}
                             disabled={!isEdit}
                             className="w-full p-2 border border-gray-300 rounded"

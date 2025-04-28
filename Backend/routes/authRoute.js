@@ -9,7 +9,7 @@ router.post("/admin/login", adminLogin)
 router.post("/admin/logout", logoutAdmin);
 router.get("/checkAdmin", checkAdmin, (req, res) => res.send({ message: "Access Granted" }))
 router.get("/checkUser", checkUser, (req, res) => res.send({ message: "Access Granted" }))
-router.post("/user/logout", logoutUser);
+router.post("/user/logout",checkUser, logoutUser);
 router.post("/user/login", userLogin)
 router.post("/user/register", userRegister)
 

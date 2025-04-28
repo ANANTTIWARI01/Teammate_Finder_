@@ -9,13 +9,16 @@ function UserData({ children }) {
   const [userData, setUserData] = useState([])
   const { isAuthenticated } = useUserAuth()
   useEffect(() => {
-    showUserData()
+    if (isAuthenticated) {
+      showUserData()
+    }
   }, [isAuthenticated])
 
 
   const showUserData = async () => {
     try {
       const response = await instance.get(`/user/hackathons`)
+      // console.log(response.data+ "hello anant")
       setUserData(response.data.myUser);
       setHackathons(response.data.hackathons)
     } catch (error) {
@@ -42,7 +45,7 @@ function UserData({ children }) {
 
 
   return (
-    <userContext.Provider value={{ toggle, availableUser, hackathons, userData }}>
+    <userContext.Provider value={{ toggle, availableUser, hackathons, userData, showUserData }}>
       {children}
     </userContext.Provider>
   )

@@ -1,42 +1,41 @@
 import { Link } from "react-router-dom";
 import { useUserData } from "../context/UserData";
-// import { useEffect } from "react";
-// import { io } from "socket.io-client";
-
-// const socket = io("http://localhost:8080"); 
 
 function UserAvailable() {
   const { toggle, availableUser } = useUserData();
 
+  // console.log(availableUser);
 
   return (
     <div>
-      <div className="md:w-1/3 my-8 md:mb-0 md:pr-4">
+      <div className="md:w-1/3 my-8 md:mb-0 md:pr-4 flex items-center justify-center gap-8">
         {toggle ? (
           <>
             {availableUser.map((obj) => (
               <div
                 key={obj._id}
-                className="bg-green-500 text-white rounded-md p-4 shadow-md sticky top-20"
+                className="bg-green-500 text-white rounded-xl p-6 shadow-lg sticky top-20 w-full max-w-md mx-auto"
               >
-                <Link to={`/${obj._id}`}>
+                <Link to={`/${obj._id}/userProfile`} className="block text-center">
                   <img
                     src={obj.image}
                     alt="Profile"
-                    className="w-32 h-32 rounded-full mx-auto mb-4"
+                    className="w-32 h-32 rounded-full mx-auto mb-4 shadow-md border-2 border-white"
                   />
-                  <h2>
+                  <h2 className="text-lg font-bold mb-2">
                     <strong>Name:</strong> {obj.name}
                   </h2>
-                  <p>
+                  <p className="text-sm mb-1">
                     <strong>Address:</strong> {obj.address}
                   </p>
-                  <p>
+                  <p className="text-sm">
                     <strong>Mode:</strong> {obj.mode}
                   </p>
                 </Link>
-                <div className="text-center bg-red-500 p-2 rounded-2xl w-1/3 flex items-center justify-center">
-                  {/* <button onClick={() => sendFriendRequest(obj._id)}>Send Friend Request</button> */}
+                <div className="flex justify-center mt-4">
+                  <button className="bg-red-500 text-white px-6 py-2 rounded-xl shadow-md hover:bg-red-600 transition-colors">
+                    Friend Request
+                  </button>
                 </div>
               </div>
             ))}

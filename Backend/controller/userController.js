@@ -28,21 +28,21 @@ export async function fetchAllHackathons(req, res) {
   }
 }
 
-export const updateLoginStatus = async (req, res) => {
-  const { isLoggedIn } = req.body;
-  const id = req.user
-  try {
-    const User = await user.findByIdAndUpdate(id, { isLoggedIn }, { new: true });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+// export const updateLoginStatus = async (req, res) => {
+//   const { isLoggedIn } = req.body;
+//   const id = req.user
+//   try {
+//     const User = await user.findByIdAndUpdate(id, { isLoggedIn }, { new: true });
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
 
-    res.json({ message: `user ${isLoggedIn ? "logged in" : "logged out"}`, User });
-  } catch (error) {
-    console.error("Error updating login status:", error);
-    res.status(500).json({ error: "Server error" });
-  }
-};
+//     res.json({ message: `user ${isLoggedIn ? "logged in" : "logged out"}`, User });
+//   } catch (error) {
+//     console.error("Error updating login status:", error);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// };
 
 export async function findNearByUser(req, res) {
 
@@ -78,6 +78,7 @@ export async function userUpdate(req, res) {
     const userId = req.user
     const { name, email, skills, address, mode, projects, pastAttendedHackathons, latitude, longitude } = req.body
 
+
     const userUpdate = await user.findById(userId)
 
 
@@ -92,12 +93,21 @@ export async function userUpdate(req, res) {
 
     if (name) userUpdate.name = name;
     if (email) userUpdate.email = email;
-    if (skills) userUpdate.skills = [...(userUpdate.skills || []), ...skills.split(",")];
-    if (projects) userUpdate.projects = [...(userUpdate.projects || []), ...projects.split(",")];
+    if (skills && skills.trim()) {
+      userUpdate.skills = [...skills.split(",")]; 
+    }
+
+    if (projects && projects.trim()) {
+      userUpdate.projects = [ ...projects.split(",")];
+    }
+
     if (address) userUpdate.address = address;
     if (latitude) userUpdate.locationCoordinates.latitude = latitude
     if (longitude) userUpdate.locationCoordinates.longitude = longitude
-    if (pastAttendedHackathons) userUpdate.pastAttendedHackathons = [...(userUpdate.pastAttendedHackathons || []), ...pastAttendedHackathons.split(",")]
+
+    if (pastAttendedHackathons && pastAttendedHackathons.trim()) {
+      userUpdate.pastAttendedHackathons = [ ...pastAttendedHackathons.split(",")];
+    }
     if (mode) userUpdate.mode = mode
 
     await userUpdate.save();
@@ -131,3 +141,8 @@ export async function fetchHackathon(req, res) {
     });
   }
 }
+
+
+
+
+
