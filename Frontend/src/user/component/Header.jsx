@@ -6,13 +6,12 @@ import { useEffect } from "react";
 function Header() {
   const { isAuthenticated, UserLogoutHandle } = useUserAuth();
   const navigate = useNavigate();
-
 useEffect(()=>{
-handleLogout()
-},[isAuthenticated,])
+
+  UserLogoutHandle();
+},[])
 
   function handleLogout() {
-    UserLogoutHandle();
     navigate("/userLogin");
   }
 
