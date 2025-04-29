@@ -5,7 +5,7 @@ import instance from "../../../axiosConfig";
 
 function Home() {
 
-  const { userData, hackathons, showUserData } = useUserData()
+  const { userData, hackathons } = useUserData()
   const [search, setSearch] = useState("")
   const [userAvailability, setUserAvailability] = useState(false)
   const [status, setStatus] = useState("")
@@ -24,7 +24,7 @@ function Home() {
   async function handleStatus() {
     try {
       await instance.patch("/user/userStatus", { status }, { withCredentials: true })
-      await showUserData()
+
     }
     catch (error) {
       console.log(error);

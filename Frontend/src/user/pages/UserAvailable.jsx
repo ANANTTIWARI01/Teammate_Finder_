@@ -7,6 +7,8 @@ function UserAvailable() {
 
   useEffect(()=>{
     userNearMe()
+    console.log("working");
+    
   },[])
 
   return (
