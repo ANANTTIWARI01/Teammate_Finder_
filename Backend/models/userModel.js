@@ -54,6 +54,10 @@ const userSchema = new Schema({
             //  required: true
         }
     },
+    status: {
+        type: String,
+        enum: ["available", "not available", "soon"]
+    }
 
 }, { timestamps: true })
 

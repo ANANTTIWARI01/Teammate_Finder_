@@ -125,7 +125,28 @@ export async function fetchHackathon(req, res) {
   }
 }
 
+export async function userStatus(req, res) {
+  try {
+    const userId = req.user
+    const { status } = req.body
 
+    if (!status) return res.status(400).json({ message: "User Status Required" })
+
+    const updatedUser = await user.findByIdAndUpdate(
+      userId,
+      { status },
+      { new: true }
+    )
+
+    if (!updatedUser) return res.status(404).json({ message: "User Not Found" })
+    res.status(200).json({ message: "User Status Updated Successfully", user: updatedUser })
+  }
+  catch (error) {
+    console.log("Error Updating User", error);
+    res.status(500).json({ message: "Internal Server Error" })
+
+  }
+}
 
 
 

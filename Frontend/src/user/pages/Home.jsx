@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";        
 import { Link } from "react-router-dom";
 import { useUserData } from "../context/UserData";
+import instance from "../../../axiosConfig";
 
 function Home() {
 
-  const { userData, hackathons } = useUserData()
+  const { userData, hackathons } = useUserData()         
+  const [search, setSearch] = useState("")
+  const [userAvailability,setUserAvailability] = useState(false)
+  const [status,setStatus] = useState("")
+
+  const filteredHackathons = useMemo(() => {
+    return hackathons.filter(hackathon =>
+      hackathon.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [search, hackathons]);
+
+useEffect(()=>{
+  if(status)
+     {handleStatus()}
+},[status])
+
+
+async function handleStatus(){
+  try{
+await instance.patch("/user/userStatus",{status},{withCredentials:true})
+  }
+  catch(error)
+  {
+    console.log(error);
+    
+  }
+}
 
   return (
     <>
@@ -27,20 +54,43 @@ function Home() {
           >
             Available User
           </Link>
-          <Link  className="text-white bg-indigo-500 px-8 py-3 my-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300"
+          <Link className="text-white bg-indigo-500 px-8 py-3 my-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300"
             to="/friends">
-              Friends
+            Friends
           </Link>
+          <div>
+            <button className="text-white bg-indigo-500 px-8 py-3 my-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300" onClick={()=>setUserAvailability(true)}>Availaibility</button>
+          </div>
+          {userAvailability ?
+          (
+            <div>
+            <form action="">
+              <label htmlFor="available">Available</label>
+              <input type="radio" name="status" checked={status==="available"} onChange={(e)=>{setStatus(e.target.value);setUserAvailability(false)}}  value="available" />
+          
+              <label htmlFor="not_available">Not Available</label>
+              <input type="radio" name="status" checked={status==="not_available"} onChange={(e)=>{setStatus(e.target.value);setUserAvailability(false)}} value="not_available" />
+          
+              <label htmlFor="soon">Soon</label>
+              <input type="radio" name="status" checked={status==="soon"} onChange={(e)=>{setStatus(e.target.value);setUserAvailability(false)}} value="soon" />
+            </form>
+          </div>
+          ):null
+
+          }
         </div>
 
         {/* Main Content Section */}
         <div className="flex-1 flex flex-col bg-white text-center p-6">
 
+          <div>
+            <input type="text" placeholder="Search Here" value={search} onChange={(e) => setSearch(e.target.value)} />
+          </div>
 
           {/* Hackathon List */}
           {hackathons && hackathons.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {hackathons.map((hackathon, index) => (
+              {filteredHackathons.map((hackathon, index) => (
                 <div
                   key={index}
                   className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow duration-300"
@@ -58,7 +108,7 @@ function Home() {
                       <h3 className="text-md font-semibold text-gray-800">{hackathon.date.slice(0, 11)}</h3>
                       <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
                     </div>
-                    <p className="text-gray-600 mt-2">{hackathon.description.split(" ").slice(0,10).join(" ")}...</p>
+                    <p className="text-gray-600 mt-2">{hackathon.description.split(" ").slice(0, 10).join(" ")}...</p>
                   </Link>
                 </div>
               ))}

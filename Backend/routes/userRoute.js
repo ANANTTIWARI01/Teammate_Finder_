@@ -1,5 +1,5 @@
 import express from "express"
-import { fetchAllHackathons, findNearByUser, userUpdate } from "../controller/userController.js"
+import { fetchAllHackathons, findNearByUser, userUpdate,userStatus } from "../controller/userController.js"
 import checkUser from "../middleware/UserCheckMiddleware.js"
 import upload from "../middleware/multerMiddleware.js"
 
@@ -8,5 +8,6 @@ const router = express.Router()
 router.get("/hackathons", checkUser, fetchAllHackathons)
 router.get("/nearby-users", checkUser, findNearByUser)
 router.put("/userPanelUpdate", checkUser, upload.single("image"), userUpdate)
+router.patch("/userStatus",checkUser,userStatus)
 export default router;
 

@@ -20,6 +20,8 @@ function UserData({ children }) {
       const response = await instance.get(`/user/hackathons`)
       // console.log(response.data+ "hello anant")
       setUserData(response.data.myUser);
+      
+      
       setHackathons(response.data.hackathons)
     } catch (error) {
       console.log(error, error.message);
@@ -45,7 +47,7 @@ function UserData({ children }) {
 
 
   return (
-    <userContext.Provider value={{ toggle, availableUser, hackathons, userData, showUserData }}>
+    <userContext.Provider value={{ toggle, availableUser, hackathons, userData, showUserData,setHackathons }}>
       {children}
     </userContext.Provider>
   )
