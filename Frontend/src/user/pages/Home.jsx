@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";        
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUserData } from "../context/UserData";
 import instance from "../../../axiosConfig";
 
 function Home() {
 
-  const { userData, hackathons } = useUserData()         
+  const { userData, hackathons, showUserData } = useUserData()
   const [search, setSearch] = useState("")
-  const [userAvailability,setUserAvailability] = useState(false)
-  const [status,setStatus] = useState("")
+  const [userAvailability, setUserAvailability] = useState(false)
+  const [status, setStatus] = useState("")
 
   const filteredHackathons = useMemo(() => {
     return hackathons.filter(hackathon =>
@@ -16,22 +16,20 @@ function Home() {
     );
   }, [search, hackathons]);
 
-useEffect(()=>{
-  if(status)
-     {handleStatus()}
-},[status])
+  useEffect(() => {
+    if (status) { handleStatus() }
+  }, [status])
 
 
-async function handleStatus(){
-  try{
-await instance.patch("/user/userStatus",{status},{withCredentials:true})
+  async function handleStatus() {
+    try {
+      await instance.patch("/user/userStatus", { status }, { withCredentials: true })
+      await showUserData()
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
-  catch(error)
-  {
-    console.log(error);
-    
-  }
-}
 
   return (
     <>
@@ -59,23 +57,23 @@ await instance.patch("/user/userStatus",{status},{withCredentials:true})
             Friends
           </Link>
           <div>
-            <button className="text-white bg-indigo-500 px-8 py-3 my-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300" onClick={()=>setUserAvailability(true)}>Availaibility</button>
+            <button className="text-white bg-indigo-500 px-8 py-3 my-3 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300" onClick={() => setUserAvailability(true)}>Availaibility</button>
           </div>
           {userAvailability ?
-          (
-            <div>
-            <form action="">
-              <label htmlFor="available">Available</label>
-              <input type="radio" name="status" checked={status==="available"} onChange={(e)=>{setStatus(e.target.value);setUserAvailability(false)}}  value="available" />
-          
-              <label htmlFor="not_available">Not Available</label>
-              <input type="radio" name="status" checked={status==="not_available"} onChange={(e)=>{setStatus(e.target.value);setUserAvailability(false)}} value="not_available" />
-          
-              <label htmlFor="soon">Soon</label>
-              <input type="radio" name="status" checked={status==="soon"} onChange={(e)=>{setStatus(e.target.value);setUserAvailability(false)}} value="soon" />
-            </form>
-          </div>
-          ):null
+            (
+              <div>
+                <form action="">
+                  <label htmlFor="available">Available</label>
+                  <input type="radio" name="status" checked={status === "available"} onChange={(e) => { setStatus(e.target.value); setUserAvailability(false) }} value="available" />
+
+                  <label htmlFor="not_available">Not Available</label>
+                  <input type="radio" name="status" checked={status === "not_available"} onChange={(e) => { setStatus(e.target.value); setUserAvailability(false) }} value="not_available" />
+
+                  <label htmlFor="soon">Soon</label>
+                  <input type="radio" name="status" checked={status === "soon"} onChange={(e) => { setStatus(e.target.value); setUserAvailability(false) }} value="soon" />
+                </form>
+              </div>
+            ) : null
 
           }
         </div>

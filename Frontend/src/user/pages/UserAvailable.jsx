@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { useUserData } from "../context/UserData";
+import { useUserData } from "../context/UserData";       
 
 function UserAvailable() {
   const { toggle, availableUser } = useUserData();
 
-  // console.log(availableUser);
+
 
   return (
     <div>

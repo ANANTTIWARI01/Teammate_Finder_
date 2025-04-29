@@ -18,10 +18,7 @@ function UserData({ children }) {
   const showUserData = async () => {
     try {
       const response = await instance.get(`/user/hackathons`)
-      // console.log(response.data+ "hello anant")
       setUserData(response.data.myUser);
-      
-      
       setHackathons(response.data.hackathons)
     } catch (error) {
       console.log(error, error.message);
