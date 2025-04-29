@@ -5,6 +5,7 @@ import { useUserAuth } from "../context/UserAuth";
 
 function UserLogin() {
   const { setIsAuthenticated } = useUserAuth();
+  const [loading,setLoading] = useState(false)
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
@@ -19,6 +20,7 @@ function UserLogin() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      setLoading(true)
        await instance.post("/auth/user/login", form, { withCredentials: true });
       setIsAuthenticated(true);
 
@@ -26,9 +28,13 @@ function UserLogin() {
     } catch (error) {
       console.log("Login error:", error);
     }
+    finally{
+setLoading(false)
+    }
   }
 
-  return (
+  return (<>
+  {loading?<div>Loading...</div>:
     <div className="flex justify-center items-center min-h-screen bg-gray-900">
       <div className="w-full max-w-md bg-gray-800 text-white rounded-lg shadow-lg p-6">
         <h1 className="text-2xl font-bold mb-6 text-center">User Login</h1>
@@ -69,6 +75,8 @@ function UserLogin() {
         </div>
       </div>
     </div>
+}
+    </>
   );
 }
 
