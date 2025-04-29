@@ -34,6 +34,7 @@ function UserData({ children }) {
   async function userNearMe() {
     try {
       const response = await instance.get("/user/nearby-users")
+      console.log(response.data.users);
       setAvailableUser(response.data.users)
       setToggle(true)
     } catch (error) {
