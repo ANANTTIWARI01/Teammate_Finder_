@@ -42,6 +42,7 @@ function UserAuth({ children }) {
       console.log("Logout error:", error);
     }
   }
+  
 
 
   return (

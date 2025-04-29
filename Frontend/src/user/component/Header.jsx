@@ -1,10 +1,15 @@
 
 import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../context/UserAuth";
+import { useEffect } from "react";
 
 function Header() {
   const { isAuthenticated, UserLogoutHandle } = useUserAuth();
   const navigate = useNavigate();
+
+useEffect(()=>{
+handleLogout()
+},[isAuthenticated,])
 
   function handleLogout() {
     UserLogoutHandle();
