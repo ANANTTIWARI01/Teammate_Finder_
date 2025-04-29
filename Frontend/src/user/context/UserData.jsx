@@ -44,7 +44,7 @@ function UserData({ children }) {
 
 
   return (
-    <userContext.Provider value={{ toggle, availableUser, hackathons, userData, showUserData,setHackathons }}>
+    <userContext.Provider value={{ toggle, availableUser, hackathons, userData, showUserData,setHackathons,userNearMe }}>
       {children}
     </userContext.Provider>
   )

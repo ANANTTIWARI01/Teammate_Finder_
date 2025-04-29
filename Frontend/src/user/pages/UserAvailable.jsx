@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
-import { useUserData } from "../context/UserData";       
+import {  useUserData } from "../context/UserData";       
+import { useEffect } from "react";
 
 function UserAvailable() {
-  const { toggle, availableUser } = useUserData();
+  const { toggle, availableUser,userNearMe } = useUserData();
 
-
+  useEffect(()=>{
+    userNearMe()
+  },[])
 
   return (
     <div>
