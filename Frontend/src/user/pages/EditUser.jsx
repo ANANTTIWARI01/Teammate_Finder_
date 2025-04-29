@@ -98,7 +98,7 @@ function EditUser() {
             await showUserData();
             //so why i call this function here because , when ever i update the userProfile , i directed to home page , 
             // then when i come again to this page the data do not get update , so for updating the data whenever i update the user Profile instantly 
-            // i call this function here/\. 
+            // i call this function here/\/\. 
             navigate("/")
         } catch (error) {
             console.log("Error updating profile:", error.message);
