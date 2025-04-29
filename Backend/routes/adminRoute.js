@@ -8,7 +8,6 @@ router.post("/addHackathon", upload.single("image"), checkAdmin, addHackathon)
 router.delete("/:hackathonId/deleteHackathon", checkAdmin, deleteHackathon)
 router.put("/:hackathonId/updateHackathon", upload.single("image"), checkAdmin, updateHackathon)
 router.put("/updateAdminPanel", upload.single("image"), checkAdmin, adminUpdate)
-// router.get("/:adminId/hackathons", checkAdmin, showHackathon)
 router.get("/adminData", checkAdmin, showAdminData)
 
 export default router
