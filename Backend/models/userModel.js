@@ -57,6 +57,17 @@ const userSchema = new Schema({
     status: {
         type: String,
         enum: ["available", "not available", "soon"]
+    },
+    userHackathons: {
+        upcoming: {
+            type: [String]
+        },
+        ongoing: {
+            type: [String]
+        },
+        past: {
+            type: [String]
+        }
     }
 
 }, { timestamps: true })

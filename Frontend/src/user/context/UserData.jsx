@@ -28,13 +28,13 @@ function UserData({ children }) {
   useEffect(() => {
     userNearMe()
   }, [userData])
+  
   const [availableUser, setAvailableUser] = useState([])
   const [toggle, setToggle] = useState(false)
 
   async function userNearMe() {
     try {
       const response = await instance.get("/user/nearby-users")
-      
       setAvailableUser(response.data.users)
       setToggle(true)
     } catch (error) {

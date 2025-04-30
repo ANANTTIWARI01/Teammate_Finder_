@@ -5,7 +5,7 @@ import instance from "../../../axiosConfig";
 
 function Home() {
 
-  const { userData, hackathons } = useUserData()
+  const { userData, hackathons, showUserData } = useUserData()
   const [search, setSearch] = useState("")
   const [userAvailability, setUserAvailability] = useState(false)
   const [status, setStatus] = useState("")
@@ -18,8 +18,12 @@ function Home() {
 
   useEffect(() => {
     if (status) { handleStatus() }
+    showUserData()
   }, [status])
 
+  useEffect(() => {
+    setStatus(userData.status)
+  }, [userData])
 
   async function handleStatus() {
     try {
@@ -61,16 +65,16 @@ function Home() {
           </div>
           {userAvailability ?
             (
-              <div>
+              <div className="flex justify-around items-center">
                 <form action="">
-                  <label htmlFor="available">Available</label>
                   <input type="radio" name="status" checked={status === "available"} onChange={(e) => { setStatus(e.target.value); setUserAvailability(false) }} value="available" />
+                  <label htmlFor="available">Available</label>
 
-                  <label htmlFor="not_available">Not Available</label>
                   <input type="radio" name="status" checked={status === "not_available"} onChange={(e) => { setStatus(e.target.value); setUserAvailability(false) }} value="not_available" />
+                  <label htmlFor="not_available">Not Available</label>
 
-                  <label htmlFor="soon">Soon</label>
                   <input type="radio" name="status" checked={status === "soon"} onChange={(e) => { setStatus(e.target.value); setUserAvailability(false) }} value="soon" />
+                  <label htmlFor="soon">Soon</label>
                 </form>
               </div>
             ) : null
@@ -82,7 +86,7 @@ function Home() {
         <div className="flex-1 flex flex-col bg-white text-center p-6">
 
           <div>
-            <input type="text" placeholder="Search Here" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <input type="text" placeholder="Try To Search Hackathon " value={search} onChange={(e) => setSearch(e.target.value)} className="border-2 m-4 rounded-lg p-1 text-md  text-bold w-[20%]" />
           </div>
 
           {/* Hackathon List */}
