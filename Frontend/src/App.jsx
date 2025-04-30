@@ -22,6 +22,7 @@ import UserProfile from "./user/pages/AvaillableUserProfile";
 import UserData from "./user/context/UserData";
 import Friends from "./user/pages/Friends";
 import MyProfile from "./user/pages/MyProfile";
+import HackathonDashboard from "./user/pages/HackathonDashboard";
 
 // import ImageUpload from "./admin/pages/ImageUpload"
 
@@ -88,7 +89,13 @@ const router = createBrowserRouter([
           <UserProtectedRoute>
             <Friends />
           </UserProtectedRoute>
-
+      },
+      {
+        path: ":hackathonName/dashboard",
+        element:
+          <UserProtectedRoute>
+            <HackathonDashboard />
+          </UserProtectedRoute>
       }
     ]
   },

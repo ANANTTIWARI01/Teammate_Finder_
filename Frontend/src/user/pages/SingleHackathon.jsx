@@ -95,9 +95,9 @@ function SingleHackathon() {
       {/* Registration Section */}
       <div className="py-10 px-6 bg-yellow-500 text-center mt-10 rounded-lg shadow-md">
         <h2 className="text-3xl font-bold text-gray-900 mb-6">🔗 Ready to Join?</h2>
-        <a className="mt-4 px-6 py-2 bg-white text-yellow-600 font-semibold rounded-lg hover:bg-gray-200" href={hackathonData.registrationLink}>
+        <Link className="mt-4 px-6 py-2 bg-white text-yellow-600 font-semibold rounded-lg hover:bg-gray-200" to={`/${hackathonData.name}/dashboard`}>
           Register Now
-        </a>
+        </Link>
       </div>
     </div>
   );
