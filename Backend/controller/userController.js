@@ -59,7 +59,7 @@ export async function findNearByUser(req, res) {
 export async function userUpdate(req, res) {
   try {
     const userId = req.user
-    const { name, email, skills, address, mode, projects, pastAttendedHackathons, latitude, longitude } = req.body
+    const { name, email, skills, address, mode, projects, pastAttendedHackathons, latitude, longitude, video } = req.body
 
 
     const userUpdate = await user.findById(userId)
@@ -68,11 +68,12 @@ export async function userUpdate(req, res) {
     if (!userUpdate) return res.status(404).json({ message: "User Not Found" });
 
     if (req.file) {
-      const secure_url = await uploadToCloudinary(req).catch((err) => {
+      const _secure_url = await uploadToCloudinary(req).catch((err) => {
         throw new Error("Cloudinary upload failed");
       });
-      userUpdate.image = secure_url
+      userUpdate.image = _secure_url
     }
+
 
     if (name) userUpdate.name = name;
     if (email) userUpdate.email = email;
@@ -87,7 +88,7 @@ export async function userUpdate(req, res) {
     if (address) userUpdate.address = address;
     if (latitude) userUpdate.locationCoordinates.latitude = latitude
     if (longitude) userUpdate.locationCoordinates.longitude = longitude
-
+    if (video) userUpdate.video = video
     if (pastAttendedHackathons && pastAttendedHackathons.trim()) {
       userUpdate.pastAttendedHackathons = [...pastAttendedHackathons.split(",")];
     }

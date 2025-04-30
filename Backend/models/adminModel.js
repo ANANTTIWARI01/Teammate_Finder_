@@ -69,6 +69,7 @@ const adminSchema = new Schema({
     image: {
         type: String,
     },
+    
     Hackathon: [hackathonSchema]
 
 }, { timestamps: true })

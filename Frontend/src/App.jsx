@@ -21,6 +21,7 @@ import AdminSingleHackathon from "./admin/pages/AdminSingleHackathon";
 import UserProfile from "./user/pages/AvaillableUserProfile";
 import UserData from "./user/context/UserData";
 import Friends from "./user/pages/Friends";
+import MyProfile from "./user/pages/MyProfile";
 
 // import ImageUpload from "./admin/pages/ImageUpload"
 
@@ -73,6 +74,21 @@ const router = createBrowserRouter([
       {
         path: "userRegister",
         element: <Register />
+      },
+      {
+        path:":userName",
+        element:
+          <UserProtectedRoute>
+            <MyProfile />
+          </UserProtectedRoute>
+      },
+      {
+        path: "friends",
+        element:
+          <UserProtectedRoute>
+            <Friends />
+          </UserProtectedRoute>
+
       }
     ]
   },
@@ -123,14 +139,7 @@ const router = createBrowserRouter([
             <AdminSingleHackathon />
           </AdminProtectedRoute>
       },
-      {
-        path: "friends",
-        element:
-          <AdminProtectedRoute>
-            <Friends />
-          </AdminProtectedRoute>
-
-      }
+      
     ]
   }
 ])

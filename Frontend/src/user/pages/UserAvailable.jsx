@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 function UserAvailable() {
   const { toggle, availableUser,userNearMe } = useUserData();
+console.log(availableUser);
 
   useEffect(()=>{
     userNearMe()
@@ -17,7 +18,7 @@ function UserAvailable() {
             {availableUser.map((obj) => (
               <div
                 key={obj._id}
-                className="bg-green-500 text-white rounded-xl p-6 shadow-lg sticky top-20 w-full max-w-md mx-auto"
+                className={obj.status==="available"?"bg-green-500 text-white rounded-xl p-6 shadow-lg sticky top-20 w-full max-w-md mx-auto":obj.status==="not_available"?"bg-red-500 text-white rounded-xl p-6 shadow-lg sticky top-20 w-full max-w-md mx-auto":"bg-yellow-500 text-white rounded-xl p-6 shadow-lg sticky top-20 w-full max-w-md mx-auto"}
               >
                 <Link to={`/${obj._id}/userProfile`} className="block text-center">
                   <img
@@ -39,7 +40,7 @@ function UserAvailable() {
                   </p>
                 </Link>
                 <div className="flex justify-center mt-4">
-                  <button className="bg-red-500 text-white px-6 py-2 rounded-xl shadow-md hover:bg-red-600 transition-colors">
+                  <button className="bg-blue-500 text-white px-6 py-2 rounded-xl shadow-md hover:bg-blue-700 transition-colors">
                     Friend Request
                   </button>
                 </div>

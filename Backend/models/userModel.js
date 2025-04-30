@@ -68,7 +68,10 @@ const userSchema = new Schema({
         past: {
             type: [String]
         }
-    }
+    },
+    video: {
+        type: String
+    },
 
 }, { timestamps: true })
 

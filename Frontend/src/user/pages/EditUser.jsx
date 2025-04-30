@@ -23,6 +23,7 @@ function EditUser() {
         longitude: "",
         image: null,
         mode: "",
+        video: null,
         projects: [],
         skills: [],
         pastAttendedHackathons: []
@@ -83,9 +84,11 @@ function EditUser() {
             data.append("longitude", formData.longitude);
             data.append("projects", formData.projects)
             data.append("pastAttendedHackathons", formData.pastAttendedHackathons)
+            data.append("video",formData.video)
             if (formData.image) {
                 data.append("image", formData.image);
             }
+          
 
             await instance.put(`/user/userPanelUpdate`, data, {
                 withCredentials: true,
@@ -243,6 +246,22 @@ function EditUser() {
                             disabled={!isEdit}
                             className="w-full p-2 border border-gray-300 rounded"
                             accept="image/*"
+                        />
+
+                    </div>
+
+                    <div>
+                        <label htmlFor="video" className="block mb-2 font-medium">
+                            Video Upload
+                        </label>
+                        <input
+                            type="url"
+                            id="video"
+                            name="video"
+                            onChange={handleChange}
+                            disabled={!isEdit}
+                            className="w-full p-2 border border-gray-300 rounded"
+                            accept="video/*"
                         />
 
                     </div>
