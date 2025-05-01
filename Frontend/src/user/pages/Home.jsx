@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUserData } from "../context/UserData";
 import instance from "../../../axiosConfig";
+import CountdownTimer from "../../../utils/CountDownTimer";
 
 function Home() {
 
@@ -9,13 +10,13 @@ function Home() {
   const [search, setSearch] = useState("")
   const [userAvailability, setUserAvailability] = useState(false)
   const [status, setStatus] = useState("")
-
+  
   const filteredHackathons = useMemo(() => {
     return hackathons.filter(hackathon =>
       hackathon.name.toLowerCase().includes(search.toLowerCase())
     );
   }, [search, hackathons]);
-
+ 
   useEffect(() => {
     if (status) { handleStatus() }
     showUserData()
@@ -35,6 +36,7 @@ function Home() {
     }
   }
 
+  
   return (
     <>
       <div className="flex items-stretch min-h-screen w-full bg-gray-100">
@@ -114,6 +116,8 @@ function Home() {
                     </div>
                     <p className="text-gray-600 mt-2">{hackathon.description.split(" ").slice(0, 10).join(" ")}...</p>
                   </Link>
+                <h1>{hackathon.date && <CountdownTimer hackathonDate={hackathon.date} />}</h1>
+
                 </div>
               ))}
             </div>

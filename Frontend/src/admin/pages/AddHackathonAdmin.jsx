@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import instance from "../../../axiosConfig";
 import { useNavigate } from "react-router-dom";
+import CountdownTimer from "../../../utils/CountDownTimer";
 
 function HackathonForm() {
   const [formData, setFormData] = useState({
@@ -10,17 +11,17 @@ function HackathonForm() {
     date: "",
     registrationLink: "",
     hackathonLink: "",
-    image: null, 
+    image: null,
   });
 
   // const { id } = useParams();
-const navigate = useNavigate()
+  const navigate = useNavigate()
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
     setFormData((prevState) => ({
       ...prevState,
-      [name]: files ? files[0] : value, 
+      [name]: files ? files[0] : value,
     }));
   };
 
@@ -40,10 +41,10 @@ const navigate = useNavigate()
         data.append("image", formData.image);
       }
 
-       await instance.post(`/admin/addHackathon`, data, {
+      await instance.post(`/admin/addHackathon`, data, {
         withCredentials: true,
         headers: {
-          "Content-Type": "multipart/form-data", 
+          "Content-Type": "multipart/form-data",
         },
       });
       navigate("/admin/home")
@@ -170,11 +171,12 @@ const navigate = useNavigate()
           type="file"
           id="image"
           name="image"
-          onChange={handleChange} 
+          onChange={handleChange}
           className="w-full p-2 border border-gray-300 rounded"
           accept="image/*"
         />
       </div>
+
 
       {/* Submit Button */}
       <button

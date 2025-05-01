@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import instance from "../../../axiosConfig";
 import { useAdminAuth } from "../context/AdminAuth";
 import EditAdminProfile from "./EditAdminProfile";
+import CountdownTimer from "../../../utils/CountDownTimer";
 
 function AdminHome() {
 
@@ -10,8 +11,7 @@ function AdminHome() {
   const [hackathons, setHackathons] = useState([])
   const [adminData, setAdminData] = useState([])
   const { isAuthenticated } = useAdminAuth()
-
-
+  // const [timer, setTimer] = useState(null)
   useEffect(() => {
     if (isAuthenticated) { showAdminData() }
   }, [isAuthenticated])
@@ -19,12 +19,22 @@ function AdminHome() {
   const showAdminData = async () => {
     try {
       const response = await instance.get(`/admin/adminData`)
+
       setAdminData(response.data.adminData);
       setHackathons(response.data.adminData.Hackathon)
     } catch (error) {
       console.log(error, error.message);
     }
   }
+
+  // useEffect(() => {
+  //   if (timer > 0) {
+  //     const timerId = setInterval(() => {
+  //       setTimer((prev) => prev - 1)
+  //     }, 1000)
+  //     return () => clearInterval(timerId)
+  //   }
+  // }, [timer])
 
   useEffect(() => {
     deletingHackathon()
@@ -57,6 +67,7 @@ function AdminHome() {
           >
             Edit Profile
           </Link>
+        
         </div>
 
         {/* Main Content Section */}
@@ -79,26 +90,27 @@ function AdminHome() {
                   key={index}
                   className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow duration-300"
                 >
-                  <Link to={`/admin/${hackathon._id}/adminSingleHackathon` } state={{hackathons}}>
-                  <img
-                    src={hackathon.image}
-                    alt={`Hackathon ${hackathon.name}`}
-                    className="rounded-t-lg h-40 w-full object-cover mb-4"
-                  />
-                  <h1 className="text-lg font-bold text-gray-800">
-                    {hackathon.name}
-                  </h1>
-                  <div className="flex items-center justify-around">
-                    <h3 className="text-md font-semibold text-gray-800">{hackathon.date.slice(0, 11)}</h3>
-                    <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
-                  </div>
-                  <p className="text-gray-600 mt-2">{hackathon.description.split(" ").slice(0,10).join(" ")}...</p>
-                  <div className="flex items-center justify-around">
-                    <button className="text-white bg-indigo-500 px-5 py-2 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300" onClick={() => setHackathonId(hackathon._id)} >Delete</button>
-                    <Link className="text-white bg-green-500 px-5 py-2 rounded-lg hover:bg-green-600 shadow-md transition duration-300" to={`/admin/${hackathon._id}/editHackathon`} state={{hackathons}} >Edit</Link>
+                  <Link to={`/admin/${hackathon._id}/adminSingleHackathon`} state={{ hackathons }} >
+                    <img
+                      src={hackathon.image}
+                      alt={`Hackathon ${hackathon.name}`}
+                      className="rounded-t-lg h-40 w-full object-cover mb-4"
+                    />
+                    <h1 className="text-lg font-bold text-gray-800">
+                      {hackathon.name}
+                    </h1>
+                    <div className="flex items-center justify-around">
+                      <h3 className="text-md font-semibold text-gray-800">{hackathon.date.slice(0, 11)}</h3>
+                      <h3 className="text-md font-semibold text-gray-800">{hackathon.mode}</h3>
+                    </div>
+                    <p className="text-gray-600 mt-2">{hackathon.description.split(" ").slice(0, 10).join(" ")}...</p>
+                    <div className="flex items-center justify-around">
+                      <button className="text-white bg-indigo-500 px-5 py-2 rounded-lg hover:bg-indigo-600 shadow-md transition duration-300" onClick={() => setHackathonId(hackathon._id)} >Delete</button>
+                      <Link className="text-white bg-green-500 px-5 py-2 rounded-lg hover:bg-green-600 shadow-md transition duration-300" to={`/admin/${hackathon._id}/editHackathon`} state={{ hackathons }} >Edit</Link>
 
-                  </div>
+                    </div>
                   </Link>
+                <h1>{hackathon.date && <CountdownTimer hackathonDate={hackathon.date} />}</h1>
                 </div>
               ))}
             </div>

@@ -5,15 +5,17 @@ import UserAvailable from "./UserAvailable";
 import { useNavigate } from "react-router-dom";
 import { MdEdit } from "react-icons/md"
 import { useUserData } from "../context/UserData";
-
+// import ShowFormPercentage from "../component/ShowFormPercentage";
+                                                          
 function EditUser() {
     const { userData, showUserData } = useUserData()
+    const [value, setValue] = useState(0)
     useEffect(() => {
         if (userData) {
             setFormData(userData);
+            ShowFormPercentage()
         }
     }, [userData]);
-
 
     const [isEdit, setIsEdit] = useState(false)
     const [formData, setFormData] = useState({
@@ -39,7 +41,7 @@ function EditUser() {
             [name]: files ? files[0] : value,
         }));
     };
-
+                                                        
     useEffect(() => {
         async function fetchCoordinates() {
             if (formData.address !== "") {
@@ -84,11 +86,11 @@ function EditUser() {
             data.append("longitude", formData.longitude);
             data.append("projects", formData.projects)
             data.append("pastAttendedHackathons", formData.pastAttendedHackathons)
-            data.append("video",formData.video)
+            data.append("video", formData.video)
             if (formData.image) {
                 data.append("image", formData.image);
             }
-          
+
 
             await instance.put(`/user/userPanelUpdate`, data, {
                 withCredentials: true,
@@ -107,8 +109,25 @@ function EditUser() {
             console.log("Error updating profile:", error.message);
         }
     };
+    
+    function ShowFormPercentage() {
+        if (userData && JSON.stringify(userData.email)) {
+            setValue(prev => prev + 20)
+        }
+        if (userData && JSON.stringify(userData.address)) {
+            setValue(prev => prev + 20)
+        }
+        if (userData && JSON.stringify(userData.skills)) {
+            setValue(prev => prev + 20)
+        }
+        if (userData && JSON.stringify(userData.mode)) {
+            setValue(prev => prev + 20)
+        }
+        
+    }
 
 
+    
     return (
         <>
             <div>
@@ -120,6 +139,8 @@ function EditUser() {
                         <h2 className="text-2xl font-bold text-center mb-4">Edit User Profile</h2>
                         <MdEdit onClick={() => { setIsEdit(true); }} className="text-3xl" />
                     </div>
+                    {/* <div>{<ShowFormPercentage userData={userData} />}</div> */}
+                    <div className="font-bold text-2xl bg-orange-500 w-[5%] p-4 rounded-full">{value}%</div>
                     {/* Email Field */}
                     <div>
                         <label htmlFor="email" className="block mb-2 font-medium">
