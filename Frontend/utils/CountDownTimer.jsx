@@ -31,13 +31,16 @@ function CountdownTimer({ hackathonDate }) {
   return (
     <div className="flex justify-between items-center bg-red-300 p-3 rounded-xl  ">
       {timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.minutes === 0 ?
-        <h3 className="">Applications Closed</h3>
+        <h3 className="text-center text-lg font-semibold m-auto">Applications Closed</h3>
         :
         <>
-          <h3>Applications Close In</h3>
-          <p>
+        <div className=" px-5 flex justify-between gap-2 items-center">
+          <h3 className="font-semibold ">Applications Close In </h3>
+          
+          <p className="font-semibold">
             {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
           </p>
+          </div>
         </>
       }
     </div>

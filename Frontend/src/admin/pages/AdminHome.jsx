@@ -110,7 +110,7 @@ function AdminHome() {
 
                     </div>
                   </Link>
-                <h1>{hackathon.date && <CountdownTimer hackathonDate={hackathon.date} />}</h1>
+                <h1 className="mt-2">{hackathon.date && <CountdownTimer hackathonDate={hackathon.date} />}</h1>
                 </div>
               ))}
             </div>

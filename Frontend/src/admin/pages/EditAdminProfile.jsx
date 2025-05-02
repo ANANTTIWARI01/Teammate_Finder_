@@ -107,7 +107,7 @@ navigate("/admin/home")
       {/* Location Field */}
       <div>
         <label htmlFor="locationName" className="block mb-2 font-medium">
-          Location Name
+          City Name
         </label>
         <input
           type="text"

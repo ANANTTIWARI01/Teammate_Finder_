@@ -23,7 +23,7 @@ function EditUser() {
         address: "",
         latitude: "",
         longitude: "",
-        image: null,
+        image: null,                                      
         mode: "",
         video: null,
         projects: [],

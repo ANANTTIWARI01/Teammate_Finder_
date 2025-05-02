@@ -76,7 +76,7 @@ function EditHackathon() {
       {/* Name Field */}
       <div>
         <label htmlFor="name" className="block mb-2 font-medium">
-          Name
+         Hackathon Name
         </label>
         <input
           type="text"
@@ -132,7 +132,7 @@ function EditHackathon() {
       {/* Date Field */}
       <div>
         <label htmlFor="date" className="block mb-2 font-medium">
-          Date
+        Organizing Date
         </label>
         <input
           type="date"
