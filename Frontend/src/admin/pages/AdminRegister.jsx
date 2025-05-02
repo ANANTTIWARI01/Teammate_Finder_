@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import instance from "../../../axiosConfig";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -17,6 +18,7 @@ function Register() {
     e.preventDefault();
     try {
       const response = await instance.post("/auth/admin/register", form, { withCredentials: true });
+navigate("/admin/login")
       console.log(response);
     } catch (error) {
       console.log(error);
