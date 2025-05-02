@@ -17,9 +17,9 @@ function Register() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await instance.post("/auth/admin/register", form, { withCredentials: true });
-navigate("/admin/login")
-      console.log(response);
+      await instance.post("/auth/admin/register", form, { withCredentials: true });
+      navigate("/admin/login")
+
     } catch (error) {
       console.log(error);
     }
