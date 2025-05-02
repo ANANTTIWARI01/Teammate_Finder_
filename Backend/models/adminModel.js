@@ -4,8 +4,8 @@ import mongoose, { Schema } from "mongoose"
 const hackathonSchema = new Schema({
     name: {
         type: String,
-        // required: true,
-        unique: true
+        required: false,
+        // unique: true
     },
     mode: {
         type: String,
@@ -76,3 +76,5 @@ const adminSchema = new Schema({
 
 const admin = mongoose.model("admin", adminSchema)
 export default admin;
+
+

@@ -5,33 +5,35 @@ export async function addHackathon(req, res) {
     try {
         const id = req.admin;
         const file = req.file;
-        // const { anantId}  = req.user
-console.log(id);
 
-        // checking file type
+
         if (!file || !file.mimetype.startsWith("image/")) {
             return res.status(400).json({ message: "Invalid file type. Please upload an image." });
         }
 
-        // getting the data of the hacakathon
-        const { name, description, mode, date,registrationLink,hackathonLink } = req.body;
+        const { name, description, mode, date, registrationLink, hackathonLink } = req.body;
 
         if (!name || !description || !mode || !date) {
             return res.status(400).json({ message: "Missing required fields: name, description, mode, or date" });
         }
 
-        // getting the Cloudinary url for image
+
+        const adminDocument = await admin.findById(id);
+        if (!adminDocument) {
+            return res.status(404).json({ message: "Admin not found." });
+        }
+
+        const existingHackathon = adminDocument.Hackathon.find(hack => hack.name === name);
+        if (existingHackathon) {
+            return res.status(400).json({ message: "Hackathon name already exists" });
+        }
+
+
         const secure_url = await uploadToCloudinary(req).catch((err) => {
             throw new Error("Cloudinary upload failed");
         });
 
-        // finding the admin
-        const Admin = await admin.findById(id);
-        if (!Admin) {
-            return res.status(404).json({ message: "Admin not found" });
-        }
 
-        // creating a new hackathon
         const newHackathon = {
             name,
             description,
@@ -41,19 +43,15 @@ console.log(id);
             registrationLink,
             hackathonLink
         };
-console.log(Admin);
 
-        // saving the hackathon data into the admin
-        Admin.Hackathon.push(newHackathon);
-        await Admin.save();
 
-        res.status(200).json({ message: "Hackathon added successfully", });
+        adminDocument.Hackathon.push(newHackathon);
+        await adminDocument.save();
+
+        res.status(200).json({ message: "Hackathon added successfully.", hackathon: newHackathon });
     } catch (error) {
-        console.error(error.stack);
-        return res.status(500).json({
-            message: "Internal Server Error",
-            error: error.message,
-        });
+        console.error(error);
+        return res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 }
 
@@ -70,7 +68,7 @@ export async function deleteHackathon(req, res) {
         // filtering the hackathons
         adminDocument.Hackathon = adminDocument.Hackathon.filter(obj => obj._id.toString() !== hackathonId)
 
-        //    saving the filtered hackathons
+
         await adminDocument.save()
 
         return res.status(200).json({ message: "Hackathon Deleted Successfully", admin: adminDocument })
@@ -121,8 +119,8 @@ export async function updateHackathon(req, res) {
 
 export async function adminUpdate(req, res) {
     try {
-        console.log(req.body);
-        
+
+
         const adminId = req.admin
         const { name, email, organizationName, locationName, description, latitude, longitude } = req.body
 
@@ -131,10 +129,10 @@ export async function adminUpdate(req, res) {
         if (!adminUpdate) return res.status(404).json({ message: "Admin not found" })
 
         if (req.file) {
-                const secure_url = await uploadToCloudinary(req).catch((err) => {
-                    throw new Error("Cloudinary upload failed");
-                });
-                adminUpdate.image = secure_url
+            const secure_url = await uploadToCloudinary(req).catch((err) => {
+                throw new Error("Cloudinary upload failed");
+            });
+            adminUpdate.image = secure_url
         }
         if (name) adminUpdate.name = name;
         if (email) adminUpdate.email = email;

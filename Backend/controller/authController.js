@@ -16,7 +16,8 @@ export async function adminRegister(req, res) {
         const newAdmin = new admin({
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+
         });
 
         await newAdmin.save()
@@ -90,7 +91,7 @@ export async function logoutAdmin(req, res) {
 export async function logoutUser(req, res) {
     try {
         const userId = req.user
-    
+
         res.clearCookie("userToken")
         await user.findByIdAndUpdate(userId, { isLoggedIn: false })
         res.status(200).send({ message: "Logged out" });

@@ -19,7 +19,6 @@ function Register() {
     try {
       await instance.post("/auth/user/register", form, { withCredentials: true });
       navigate("/")
-
     } catch (error) {
       console.log(error);
     }

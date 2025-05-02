@@ -104,28 +104,6 @@ export async function userUpdate(req, res) {
   }
 }
 
-export async function fetchHackathon(req, res) {
-  try {
-    const HackathonId = req.params.hackathonId
-
-    const admins = await admin.find({}, "Hackathon").lean();
-
-    const hackathons = admins.flatMap((admin) => admin.Hackathon)
-
-    const singleHackathon = hackathons.find((obj) => { return (HackathonId.toString() === obj._id.toString()) })
-
-    res.status(200).json({ message: "Hackathon Found Successfully", singleHackathon })
-
-  }
-  catch (error) {
-    console.error("Error fetching hackathon:", error.message);
-    res.status(500).json({
-      message: "Server Error while fetching hackathon",
-      error: error.message
-    });
-  }
-}
-
 export async function userStatus(req, res) {
   try {
     const userId = req.user

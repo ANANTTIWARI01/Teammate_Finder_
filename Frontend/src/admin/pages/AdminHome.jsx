@@ -11,7 +11,7 @@ function AdminHome() {
   const [hackathons, setHackathons] = useState([])
   const [adminData, setAdminData] = useState([])
   const { isAuthenticated } = useAdminAuth()
-  // const [timer, setTimer] = useState(null)
+  
   useEffect(() => {
     if (isAuthenticated) { showAdminData() }
   }, [isAuthenticated])
@@ -26,15 +26,6 @@ function AdminHome() {
       console.log(error, error.message);
     }
   }
-
-  // useEffect(() => {
-  //   if (timer > 0) {
-  //     const timerId = setInterval(() => {
-  //       setTimer((prev) => prev - 1)
-  //     }, 1000)
-  //     return () => clearInterval(timerId)
-  //   }
-  // }, [timer])
 
   useEffect(() => {
     deletingHackathon()
