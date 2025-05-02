@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AdminAuth, { useAdminAuth } from "../context/AdminAuth";
+import  { useAdminAuth } from "../context/AdminAuth";
 import instance from "../../../axiosConfig";
 
 function AdminLogin() {
@@ -11,6 +11,8 @@ function AdminLogin() {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false); 
+
   function handleChange(e) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -18,15 +20,17 @@ function AdminLogin() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await instance.post("/auth/admin/login", form, { withCredentials: true });
-      // setAdminId(response.data.admin.id)
       console.log(response.data);
       
       setIsAuthenticated(true);
       navigate(`/admin/home`);
     } catch (error) {
       console.log("Login error:", error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -56,9 +60,12 @@ function AdminLogin() {
           />
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md font-semibold"
+            className={`w-full py-2 px-4 rounded-md font-semibold ${
+              loading ? "bg-gray-600 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600 text-white"
+            }`}
+            disabled={loading} 
           >
-            Login
+            {loading ? "Logging in..." : "Login"} 
           </button>
         </form>
         <div className="mt-4 text-center">
