@@ -85,9 +85,9 @@ function SingleHackathon() {
       <div className="py-10 px-6 bg-white mt-10 rounded-lg shadow-md">
         <h2 className="text-3xl font-bold text-gray-800">🎁 Prizes & Recognition</h2>
         <ul className="mt-4 list-disc pl-6 text-gray-700">
-          <li>🥇 1st Place - [$Amount Prize]</li>
-          <li>🥈 2nd Place - [$Amount Prize]</li>
-          <li>🥉 3rd Place - [$Amount Prize]</li>
+          <li>🥇 1st Place - [$200]</li>
+          <li>🥈 2nd Place - [$100]</li>
+          <li>🥉 3rd Place - [$70]</li>
           <li>🎖 Special CyberSecurity Innovation Award</li>
         </ul>
       </div>

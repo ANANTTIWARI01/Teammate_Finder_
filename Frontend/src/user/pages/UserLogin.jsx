@@ -1,11 +1,11 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import instance from "../../../axiosConfig";
 import { useUserAuth } from "../context/UserAuth";
 
 function UserLogin() {
   const { setIsAuthenticated } = useUserAuth();
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
@@ -19,23 +19,22 @@ function UserLogin() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true)
     try {
-      setLoading(true)
-       await instance.post("/auth/user/login", form, { withCredentials: true });
+      await instance.post("/auth/user/login", form, { withCredentials: true });
       setIsAuthenticated(true);
 
       navigate(`/`);
     } catch (error) {
       console.log("Login error:", error);
     }
-    finally{
-setLoading(false)
+    finally {
+      setLoading(false)
     }
   }
 
 
   return (<>
-  {loading?<div>Loading...</div>:
     <div className="flex justify-center items-center min-h-screen bg-gray-900">
       <div className="w-full max-w-md bg-gray-800 text-white rounded-lg shadow-lg p-6">
         <h1 className="text-2xl font-bold mb-6 text-center">User Login</h1>
@@ -61,9 +60,11 @@ setLoading(false)
           />
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md font-semibold"
+            className={`w-full py-2 px-4 rounded-md font-semibold ${loading ? "bg-gray-600 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600 text-white"
+              }`}
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
         <div className="mt-4 text-center">
@@ -76,8 +77,8 @@ setLoading(false)
         </div>
       </div>
     </div>
-}
-    </>
+
+  </>
   );
 }
 

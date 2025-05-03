@@ -123,7 +123,6 @@ function EditUser() {
         if (userData && JSON.stringify(userData.mode)) {
             setValue(prev => prev + 20)
         }
-        
     }
 
 
@@ -139,7 +138,6 @@ function EditUser() {
                         <h2 className="text-2xl font-bold text-center mb-4">Edit User Profile</h2>
                         <MdEdit onClick={() => { setIsEdit(true); }} className="text-3xl" />
                     </div>
-                    {/* <div>{<ShowFormPercentage userData={userData} />}</div> */}
                     <div className="font-bold text-2xl bg-orange-500 w-[5%] p-4 rounded-full">{value}%</div>
                     {/* Email Field */}
                     <div>

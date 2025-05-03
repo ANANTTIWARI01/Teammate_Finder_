@@ -11,7 +11,7 @@ export async function addHackathon(req, res) {
             return res.status(400).json({ message: "Invalid file type. Please upload an image." });
         }
 
-        const { name, description, mode, date, registrationLink, hackathonLink } = req.body;
+        const { name, description, mode, date, registrationLink } = req.body;
 
         if (!name || !description || !mode || !date) {
             return res.status(400).json({ message: "Missing required fields: name, description, mode, or date" });
@@ -41,7 +41,6 @@ export async function addHackathon(req, res) {
             date,
             image: secure_url,
             registrationLink,
-            hackathonLink
         };
 
 
@@ -85,7 +84,7 @@ export async function updateHackathon(req, res) {
 
         const hackathonId = req.params.hackathonId
 
-        const { name, date, mode, description, registrationLink, hackathonLink } = req.body
+        const { name, date, mode, description, registrationLink } = req.body
         if (!adminId || !hackathonId) return res.status(404).send({ message: "Admin ID and Hackathon ID are required" })
 
         const adminDocument = await admin.findById(adminId)
@@ -102,7 +101,6 @@ export async function updateHackathon(req, res) {
         }
         if (name) toUpdateHackathon.name = name
         if (registrationLink) toUpdateHackathon.registrationLink = registrationLink
-        if (hackathonLink) toUpdateHackathon.hackathonLink = hackathonLink
         if (date) toUpdateHackathon.date = date
         if (mode) toUpdateHackathon.mode = mode
         if (description) toUpdateHackathon.description = description

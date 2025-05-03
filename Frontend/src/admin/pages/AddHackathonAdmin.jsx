@@ -10,7 +10,7 @@ function HackathonForm() {
     description: "",
     date: "",
     registrationLink: "",
-    hackathonLink: "",
+    // hackathonLink: "",
     image: null,
   });
 
@@ -36,7 +36,7 @@ function HackathonForm() {
       data.append("description", formData.description);
       data.append("date", formData.date);
       data.append("registrationLink", formData.registrationLink);
-      data.append("hackathonLink", formData.hackathonLink);
+      // data.append("hackathonLink", formData.hackathonLink);
       if (formData.image) {
         data.append("image", formData.image);
       }
@@ -147,7 +147,7 @@ function HackathonForm() {
       </div>
 
       {/* Hackathon Link Field */}
-      <div>
+      {/* <div>
         <label htmlFor="hackathonLink" className="block mb-2 font-medium">
           Hackathon Link
         </label>
@@ -160,7 +160,7 @@ function HackathonForm() {
           className="w-full p-2 border border-gray-300 rounded"
           placeholder="Enter hackathon link (optional)"
         />
-      </div>
+      </div> */}
 
       {/* Image Field */}
       <div>

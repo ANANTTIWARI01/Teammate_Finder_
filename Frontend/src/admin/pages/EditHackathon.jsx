@@ -23,7 +23,6 @@ function EditHackathon() {
     description: "",
     date: "",
     registrationLink: "",
-    hackathonLink: "",
     image: null,
   });
 
@@ -48,7 +47,6 @@ function EditHackathon() {
       data.append("description", formData.description);
       data.append("date", formData.date);
       data.append("registrationLink", formData.registrationLink);
-      data.append("hackathonLink", formData.hackathonLink);
       if (formData.image) {
         data.append("image", formData.image);
       }
@@ -164,22 +162,6 @@ function EditHackathon() {
         />
       </div>
 
-      {/* Hackathon Link Field */}
-      <div>
-        <label htmlFor="hackathonLink" className="block mb-2 font-medium">
-          Hackathon Link
-        </label>
-        <input
-          type="url"
-          id="hackathonLink"
-          name="hackathonLink"
-          value={formData.hackathonLink}
-          onChange={handleChange}
-          disabled={!isEdit}
-          className="w-full p-2 border border-gray-300 rounded"
-          placeholder="Enter hackathon link (optional)"
-        />
-      </div>
 
       {/* Image Field */}
       <div>
